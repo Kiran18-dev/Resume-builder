@@ -1,0 +1,8 @@
+[phases.setup]
+nixPkgs = ["jdk17", "maven"]
+
+[phases.build]
+cmds = ["cd resume-builder && mvn clean package -DskipTests"]
+
+[start]
+cmd = "java -jar resume-builder/target/*.jar"
