@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>AI Resume Builder - Free Professional Resumes</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0f0f1a;
+            min-height: 100vh;
+            color: #1e293b;
+        }
+
+        /* HERO HEADER */
+        .hero {
+            background: linear-gradient(135deg, #0f0f1a 0%, #1a1a2e 50%, #16213e 100%);
+            padding: 60px 20px 80px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 30% 50%, rgba(102,126,234,0.15) 0%, transparent 50%),
+                        radial-gradient(circle at 70% 50%, rgba(118,75,162,0.15) 0%, transparent 50%);
+            animation: pulse 8s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: rgba(102,126,234,0.2);
+            border: 1px solid rgba(102,126,234,0.4);
+            color: #a5b4fc;
+            padding: 6px 16px;
+            border-radius: 100px;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .hero h1 {
+            font-size: 52px;
+            font-weight: 800;
+            color: white;
+            line-height: 1.1;
+            margin-bottom: 16px;
+            position: relative;
+        }
+
+        .hero h1 span {
+            background: linear-gradient(135deg, #667eea, #a78bfa, #ec4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 18px;
+            color: #94a3b8;
+            max-width: 500px;
+            margin: 0 auto 32px;
+            position: relative;
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            position: relative;
+        }
+
+        .stat { text-align: center; }
+        .stat-num { font-size: 24px; font-weight: 800; color: white; }
+        .stat-label { font-size: 12px; color: #64748b; margin-top: 4px; }
+
+        /* MAIN CONTENT */
+        .main {
+            max-width: 1000px;
+            margin: -40px auto 0;
+            padding: 0 20px 60px;
+            position: relative;
+        }
+
+        /* STEP INDICATOR */
+        .steps {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 32px;
+        }
+
+        .step {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            border-radius: 100px;
+            font-size: 13px;
+            font-weight: 600;
+            background: rgba(255,255,255,0.05);
+            color: #64748b;
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .step.active {
+            background: rgba(102,126,234,0.2);
+            color: #a5b4fc;
+            border-color: rgba(102,126,234,0.4);
+        }
+
+        .step-num {
+            width: 22px; height: 22px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 11px;
+        }
+
+        .step.active .step-num {
+            background: #667eea;
+            color: white;
+        }
+
+        /* CARDS */
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 32px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05), 0 10px 40px rgba(0,0,0,0.1);
+            border: 1px solid rgba(255,255,255,0.8);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .card-icon {
+            width: 40px; height: 40px;
+            border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 20px;
+        }
+
+        .card-icon.purple { background: linear-gradient(135deg, #667eea, #764ba2); }
+        .card-icon.blue { background: linear-gradient(135deg, #0ea5e9, #2563eb); }
+        .card-icon.green { background: linear-gradient(135deg, #10b981, #059669); }
+        .card-icon.orange { background: linear-gradient(135deg, #f59e0b, #ef4444); }
+        .card-icon.pink { background: linear-gradient(135deg, #ec4899, #8b5cf6); }
+
+        .card-title { font-size: 18px; font-weight: 700; color: #0f172a; }
+        .card-subtitle { font-size: 13px; color: #94a3b8; margin-top: 2px; }
+
+        /* TEMPLATE GRID */
+        .template-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+        }
+
+        .template-option { cursor: pointer; }
+        .template-option input { display: none; }
+
+        .template-card {
+            border: 2px solid #e2e8f0;
+            border-radius: 14px;
+            padding: 16px 12px;
+            text-align: center;
+            transition: all 0.25s;
+            background: #f8fafc;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .template-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 4px;
+        }
+
+        .t-modern::before { background: linear-gradient(90deg, #2563eb, #60a5fa); }
+        .t-classic::before { background: linear-gradient(90deg, #1e293b, #64748b); }
+        .t-minimal::before { background: linear-gradient(90deg, #0d9488, #34d399); }
+        .t-creative::before { background: linear-gradient(90deg, #7c3aed, #ec4899); }
+
+        .template-option input:checked + .template-card {
+            border-color: #667eea;
+            background: #eef2ff;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(102,126,234,0.25);
+        }
+
+        .template-preview {
+            height: 80px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .t-modern .template-preview {
+            background: linear-gradient(90deg, #2563eb 35%, #f1f5f9 35%);
+        }
+        .t-classic .template-preview {
+            background: white;
+            border: 1px solid #e2e8f0;
+        }
+        .t-minimal .template-preview {
+            background: linear-gradient(180deg, white 60%, #f0fdf4 100%);
+            border-left: 4px solid #0d9488;
+        }
+        .t-creative .template-preview {
+            background: linear-gradient(135deg, #1e1e2e 50%, #7c3aed22 100%);
+        }
+
+        .template-name {
+            font-size: 14px;
+            font-weight: 700;
+            color: #0f172a;
+        }
+
+        .template-desc {
+            font-size: 11px;
+            color: #94a3b8;
+            margin-top: 3px;
+        }
+
+        .template-check {
+            position: absolute;
+            top: 8px; right: 8px;
+            width: 20px; height: 20px;
+            background: #667eea;
+            border-radius: 50%;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 11px;
+        }
+
+        .template-option input:checked + .template-card .template-check {
+            display: flex;
+        }
+
+        /* FORM */
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .form-grid.three { grid-template-columns: 1fr 1fr 1fr; }
+        .form-group { display: flex; flex-direction: column; gap: 6px; }
+        .form-group.full { grid-column: 1 / -1; }
+
+        label {
+            font-size: 12px;
+            font-weight: 600;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+        }
+
+        input, textarea, select {
+            padding: 11px 14px;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 14px;
+            font-family: 'Inter', sans-serif;
+            color: #0f172a;
+            background: #f8fafc;
+            transition: all 0.2s;
+        }
+
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            background: white;
+            box-shadow: 0 0 0 4px rgba(102,126,234,0.1);
+        }
+
+        input::placeholder, textarea::placeholder { color: #cbd5e1; }
+        textarea { height: 100px; resize: vertical; line-height: 1.6; }
+
+        /* PHOTO UPLOAD */
+        .photo-upload-area {
+            border: 2px dashed #e2e8f0;
+            border-radius: 12px;
+            padding: 24px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            background: #f8fafc;
+        }
+
+        .photo-upload-area:hover {
+            border-color: #667eea;
+            background: #f0f4ff;
+        }
+
+        .photo-upload-area .upload-icon { font-size: 36px; margin-bottom: 8px; }
+        .photo-upload-area .upload-text { font-size: 14px; font-weight: 600; color: #475569; }
+        .photo-upload-area .upload-hint { font-size: 12px; color: #94a3b8; margin-top: 4px; }
+
+        /* GENERATE BUTTON */
+        .btn-wrap { position: relative; }
+
+        .btn-generate {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 14px;
+            font-size: 17px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Inter', sans-serif;
+            letter-spacing: 0.3px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-generate::after {
+            content: '';
+            position: absolute;
+            top: 50%; left: 50%;
+            width: 0; height: 0;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn-generate:hover::after { width: 300px; height: 300px; }
+
+        .btn-generate:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 35px rgba(102,126,234,0.5);
+        }
+
+        .btn-generate:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* LOADING */
+        .loading-overlay {
+            display: none;
+            background: white;
+            border-radius: 20px;
+            padding: 60px 40px;
+            text-align: center;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+
+        .loading-ring {
+            width: 64px; height: 64px;
+            margin: 0 auto 24px;
+            position: relative;
+        }
+
+        .loading-ring::before, .loading-ring::after {
+            content: '';
+            position: absolute;
+            border-radius: 50%;
+        }
+
+        .loading-ring::before {
+            width: 100%; height: 100%;
+            border: 4px solid #e2e8f0;
+        }
+
+        .loading-ring::after {
+            width: 100%; height: 100%;
+            border: 4px solid transparent;
+            border-top-color: #667eea;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        .loading-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 8px;
+        }
+
+        .loading-sub {
+            font-size: 14px;
+            color: #94a3b8;
+        }
+
+        .loading-dots span {
+            display: inline-block;
+            width: 8px; height: 8px;
+            border-radius: 50%;
+            background: #667eea;
+            margin: 0 3px;
+            animation: bounce 1.4s infinite;
+        }
+
+        .loading-dots span:nth-child(2) { animation-delay: 0.2s; }
+        .loading-dots span:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes bounce {
+            0%, 80%, 100% { transform: translateY(0); opacity: 0.4; }
+            40% { transform: translateY(-10px); opacity: 1; }
+        }
+
+        /* RESULT */
+        .result-wrapper {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+            margin-bottom: 20px;
+        }
+
+        .result-toolbar {
+            background: linear-gradient(135deg, #0f172a, #1e293b);
+            padding: 16px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .result-toolbar-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .toolbar-dot {
+            width: 12px; height: 12px;
+            border-radius: 50%;
+        }
+
+        .result-title {
+            color: white;
+            font-size: 15px;
+            font-weight: 600;
+            margin-left: 8px;
+        }
+
+        .toolbar-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-action {
+            padding: 8px 20px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .btn-pdf {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .btn-pdf:hover { opacity: 0.9; transform: translateY(-1px); }
+
+        .btn-new {
+            background: rgba(255,255,255,0.1);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .btn-new:hover { background: rgba(255,255,255,0.2); }
+
+        .result-body {
+            padding: 40px;
+            background: #f8fafc;
+        }
+
+        .resume-container {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.08);
+            overflow: hidden;
+        }
+
+        @media (max-width: 640px) {
+            .hero h1 { font-size: 32px; }
+            .form-grid, .form-grid.three { grid-template-columns: 1fr; }
+            .template-grid { grid-template-columns: repeat(2, 1fr); }
+            .hero-stats { gap: 20px; }
+            .steps { flex-wrap: wrap; }
+        }
+
+        @media print {
+            body { background: white; }
+            .hero, .main > .card, .main > .steps,
+            .result-toolbar, .btn-generate { display: none !important; }
+            .result-wrapper { box-shadow: none; border-radius: 0; }
+            .result-body { padding: 0; background: white; }
+            .resume-container { box-shadow: none; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+    <div class="hero-badge">✨ AI POWERED • FREE • INSTANT</div>
+    <h1>Build Your <span>Dream Resume</span><br/>in Seconds</h1>
+    <p>Let AI craft a stunning professional resume tailored just for you</p>
+    <div class="hero-stats">
+        <div class="stat">
+            <div class="stat-num">4</div>
+            <div class="stat-label">Premium Templates</div>
+        </div>
+        <div class="stat">
+            <div class="stat-num">10s</div>
+            <div class="stat-label">Generation Time</div>
+        </div>
+        <div class="stat">
+            <div class="stat-num">Free</div>
+            <div class="stat-label">Forever</div>
+        </div>
+    </div>
+</div>
+
+<div class="main">
+
+    <!-- STEPS -->
+    <div class="steps">
+        <div class="step active">
+            <div class="step-num">1</div> Choose Template
+        </div>
+        <div class="step active">
+            <div class="step-num">2</div> Fill Details
+        </div>
+        <div class="step active">
+            <div class="step-num">3</div> Generate & Download
+        </div>
+    </div>
+
+    <form action="/generate" method="post" enctype="multipart/form-data" onsubmit="showLoading()">
+
+        <!-- TEMPLATE -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-icon purple">🎨</div>
+                <div>
+                    <div class="card-title">Choose Your Template</div>
+                    <div class="card-subtitle">Pick a style that matches your personality</div>
+                </div>
+            </div>
+            <div class="template-grid">
+                <label class="template-option">
+                    <input type="radio" name="template" value="modern" checked/>
+                    <div class="template-card t-modern">
+                        <div class="template-check">✓</div>
+                        <div class="template-preview"></div>
+                        <div class="template-name">Modern</div>
+                        <div class="template-desc">Blue sidebar layout</div>
+                    </div>
+                </label>
+                <label class="template-option">
+                    <input type="radio" name="template" value="classic"/>
+                    <div class="template-card t-classic">
+                        <div class="template-check">✓</div>
+                        <div class="template-preview"></div>
+                        <div class="template-name">Classic</div>
+                        <div class="template-desc">Formal & elegant</div>
+                    </div>
+                </label>
+                <label class="template-option">
+                    <input type="radio" name="template" value="minimal"/>
+                    <div class="template-card t-minimal">
+                        <div class="template-check">✓</div>
+                        <div class="template-preview"></div>
+                        <div class="template-name">Minimal</div>
+                        <div class="template-desc">Clean & simple</div>
+                    </div>
+                </label>
+                <label class="template-option">
+                    <input type="radio" name="template" value="creative"/>
+                    <div class="template-card t-creative">
+                        <div class="template-check">✓</div>
+                        <div class="template-preview"></div>
+                        <div class="template-name">Creative</div>
+                        <div class="template-desc">Bold & unique</div>
+                    </div>
+                </label>
+            </div>
+        </div>
+
+        <!-- PERSONAL INFO -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-icon blue">👤</div>
+                <div>
+                    <div class="card-title">Personal Information</div>
+                    <div class="card-subtitle">Your basic contact details</div>
+                </div>
+            </div>
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>Full Name *</label>
+                    <input type="text" name="name" placeholder="Kiran Gowda" required/>
+                </div>
+                <div class="form-group">
+                    <label>Email Address *</label>
+                    <input type="email" name="email" placeholder="kiran@gmail.com" required/>
+                </div>
+                <div class="form-group">
+                    <label>Phone Number *</label>
+                    <input type="text" name="phone" placeholder="+91 9999999999" required/>
+                </div>
+                <div class="form-group">
+                    <label>Location</label>
+                    <input type="text" name="location" placeholder="Bangalore, Karnataka"/>
+                </div>
+                <div class="form-group">
+                    <label>LinkedIn Profile</label>
+                    <input type="text" name="linkedin" placeholder="linkedin.com/in/yourname"/>
+                </div>
+                <div class="form-group">
+                    <label>GitHub Profile</label>
+                    <input type="text" name="github" placeholder="github.com/yourname"/>
+                </div>
+                <div class="form-group full">
+                    <label>Professional Summary</label>
+                    <textarea name="summary" placeholder="Passionate software developer with 2+ years of experience building scalable web applications. Skilled in Java, Spring Boot and modern technologies..."></textarea>
+                </div>
+                <div class="form-group full">
+                    <label>Profile Photo (Optional)</label>
+                    <div class="photo-upload-area" onclick="document.getElementById('photoInput').click()">
+                        <div class="upload-icon">📷</div>
+                        <div class="upload-text" id="photoText">Click to upload your photo</div>
+                        <div class="upload-hint">JPG or PNG, max 2MB</div>
+                    </div>
+                    <input type="file" id="photoInput" name="photo" accept="image/*"
+                           style="display:none" onchange="updatePhoto(this)"/>
+                </div>
+            </div>
+        </div>
+
+        <!-- SKILLS -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-icon green">🛠️</div>
+                <div>
+                    <div class="card-title">Skills & Languages</div>
+                    <div class="card-subtitle">Technical and soft skills</div>
+                </div>
+            </div>
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>Technical Skills</label>
+                    <textarea name="skills" placeholder="Java, Spring Boot, MySQL, React, Git, Docker, AWS, REST APIs..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Languages Known</label>
+                    <textarea name="languages" placeholder="English - Fluent&#10;Hindi - Native&#10;Kannada - Native"></textarea>
+                </div>
+            </div>
+        </div>
+
+        <!-- EXPERIENCE -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-icon orange">💼</div>
+                <div>
+                    <div class="card-title">Work Experience</div>
+                    <div class="card-subtitle">Your professional journey</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Experience Details</label>
+                <textarea name="experience" style="height:130px"
+                          placeholder="Software Developer at XYZ Tech (Jan 2022 - Present)&#10;• Built REST APIs using Spring Boot serving 10k+ users&#10;• Reduced page load time by 40% through optimization&#10;• Led team of 3 developers for new product feature&#10;&#10;Intern at ABC Company (Jun 2021 - Dec 2021)&#10;• Developed frontend features using React&#10;• Fixed 50+ bugs improving app stability"></textarea>
+            </div>
+        </div>
+
+        <!-- PROJECTS -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-icon pink">🚀</div>
+                <div>
+                    <div class="card-title">Projects</div>
+                    <div class="card-subtitle">Showcase your best work</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Projects</label>
+                <textarea name="projects" style="height:130px"
+                          placeholder="AI Resume Builder | github.com/kiran/resume-builder&#10;• Built with Java Spring Boot + Groq AI&#10;• Generates professional resumes in 10 seconds&#10;&#10;E-Commerce Platform | Live: myshop.com&#10;• Full stack app with React + Spring Boot + MySQL&#10;• 500+ active users"></textarea>
+            </div>
+        </div>
+
+        <!-- EDUCATION -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-icon blue">🎓</div>
+                <div>
+                    <div class="card-title">Education & Certifications</div>
+                    <div class="card-subtitle">Academic background and achievements</div>
+                </div>
+            </div>
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>Education</label>
+                    <textarea name="education"
+                              placeholder="B.Tech Computer Science&#10;ABC University, Bangalore&#10;2018 - 2022 | CGPA: 8.5/10"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Certifications & Awards</label>
+                    <textarea name="certifications"
+                              placeholder="AWS Certified Developer - 2023&#10;Oracle Java SE Certification&#10;Best Employee Award - XYZ 2023&#10;Hackathon Winner - TechFest 2022"></textarea>
+                </div>
+            </div>
+        </div>
+
+        <button type="submit" class="btn-generate">
+            ✨ Generate My Professional Resume →
+        </button>
+    </form>
+
+    <!-- LOADING -->
+    <div class="loading-overlay" id="loading">
+        <div class="loading-ring"></div>
+        <div class="loading-title">AI is crafting your resume...</div>
+        <div class="loading-sub" style="margin-bottom:16px">This takes about 10-15 seconds</div>
+        <div class="loading-dots">
+            <span></span><span></span><span></span>
+        </div>
+    </div>
+
+    <!-- RESULT -->
+    <div class="result-wrapper" th:if="${resume}">
+        <div class="result-toolbar">
+            <div class="result-toolbar-left">
+                <div class="toolbar-dot" style="background:#ef4444"></div>
+                <div class="toolbar-dot" style="background:#f59e0b"></div>
+                <div class="toolbar-dot" style="background:#10b981"></div>
+                <div class="result-title">✅ Your Resume is Ready!</div>
+            </div>
+            <div class="toolbar-actions">
+                <button class="btn-action btn-new" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+                    ↑ Edit Resume
+                </button>
+                <button class="btn-action btn-pdf" onclick="downloadResume()">
+                    ⬇ Download PDF
+                </button>
+            </div>
+        </div>
+        <div class="result-body">
+            <div class="resume-container" id="resumeOutput">
+                <div th:utext="${resume}"></div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    function showLoading() {
+        document.getElementById('loading').style.display = 'block';
+        var btn = document.querySelector('.btn-generate');
+        btn.disabled = true;
+        btn.innerHTML = '⏳ AI is generating your resume...';
+        setTimeout(() => {
+            document.getElementById('loading').scrollIntoView({ behavior: 'smooth' });
+        }, 100);
+    }
+
+    function updatePhoto(input) {
+        if (input.files && input.files[0]) {
+            document.getElementById('photoText').innerHTML = '✅ ' + input.files[0].name + ' selected';
+        }
+    }
+
+    function downloadResume() {
+        var content = document.getElementById('resumeOutput').innerHTML;
+        var win = window.open('', '_blank');
+        win.document.write(`<!DOCTYPE html>
+            <html><head><title>Resume</title>
+            <style>
+                body { margin: 0; padding: 0; font-family: Arial, sans-serif; }
+                button { display: none !important; }
+                @media print { button { display: none !important; } }
+            </style>
+            </head><body>${content}</body></html>`);
+        win.document.close();
+        setTimeout(() => { win.focus(); win.print(); }, 800);
+    }
+
+    window.onload = function() {
+        var result = document.querySelector('.result-wrapper');
+        if (result) {
+            setTimeout(() => result.scrollIntoView({ behavior: 'smooth' }), 400);
+        }
+    }
+</script>
+</body>
+</html>
