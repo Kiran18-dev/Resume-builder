@@ -4,3 +4,4 @@ target/
 *.jar
 .idea/
 *.iml
+resume-builder/src/main/resources/application.properties
