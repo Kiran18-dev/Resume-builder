@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Fresher Tips - AI Resume Builder | Job Guide for Freshers India</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+    <style>
+        :root { --bg:#0a0a0f;--bg2:#111118;--card:#16161f;--border:rgba(255,255,255,0.08);--text:#ffffff;--text2:#94a3b8;--accent:#6366f1;--accent2:#8b5cf6;--accent3:#ec4899; }
+        [data-theme="light"] { --bg:#f8faff;--bg2:#eef2ff;--card:#ffffff;--border:rgba(0,0,0,0.08);--text:#0f172a;--text2:#64748b; }
+        * { box-sizing:border-box;margin:0;padding:0; }
+        body { font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);transition:all 0.3s; }
+        nav { position:fixed;top:0;left:0;right:0;z-index:1000;padding:16px 40px;display:flex;align-items:center;justify-content:space-between;background:rgba(10,10,15,0.8);backdrop-filter:blur(20px);border-bottom:1px solid var(--border); }
+        [data-theme="light"] nav { background:rgba(248,250,255,0.8); }
+        .nav-logo { font-size:20px;font-weight:800;background:linear-gradient(135deg,#6366f1,#ec4899);-webkit-background-clip:text;-webkit-text-fill-color:transparent; }
+        .nav-links { display:flex;gap:32px;align-items:center; }
+        .nav-links a { color:var(--text2);text-decoration:none;font-size:14px;font-weight:500; }
+        .nav-links a:hover { color:var(--text); }
+        .nav-cta { background:linear-gradient(135deg,#6366f1,#8b5cf6);color:white!important;padding:8px 20px;border-radius:8px;font-weight:600!important; }
+        .theme-toggle { background:var(--card);border:1px solid var(--border);color:var(--text);padding:8px 12px;border-radius:8px;cursor:pointer;font-size:16px; }
+        .page-hero { padding:140px 40px 60px;text-align:center;background:linear-gradient(180deg,rgba(99,102,241,0.1),transparent); }
+        .section-tag { display:inline-block;background:rgba(99,102,241,0.15);border:1px solid rgba(99,102,241,0.3);color:#a5b4fc;padding:4px 16px;border-radius:100px;font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:16px; }
+        .gradient-text { background:linear-gradient(135deg,#6366f1,#8b5cf6,#ec4899);-webkit-background-clip:text;-webkit-text-fill-color:transparent; }
+        .content { max-width:900px;margin:0 auto;padding:40px; }
+        .tip-section { margin-bottom:60px; }
+        .tip-section h2 { font-size:28px;font-weight:800;margin-bottom:24px;display:flex;align-items:center;gap:12px; }
+        .tip-card { background:var(--card);border:1px solid var(--border);border-radius:16px;padding:24px;margin-bottom:16px;transition:all 0.3s;border-left:4px solid #6366f1; }
+        .tip-card:hover { transform:translateX(8px);border-color:#6366f1; }
+        .tip-num { display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;background:linear-gradient(135deg,#6366f1,#8b5cf6);border-radius:50%;font-size:14px;font-weight:800;color:white;margin-bottom:12px; }
+        .tip-card h3 { font-size:16px;font-weight:700;margin-bottom:8px; }
+        .tip-card p { font-size:14px;color:var(--text2);line-height:1.7; }
+        .motivation-box { background:linear-gradient(135deg,rgba(99,102,241,0.2),rgba(236,72,153,0.2));border:1px solid rgba(99,102,241,0.3);border-radius:24px;padding:48px;text-align:center;margin:60px 0; }
+        .motivation-box h2 { font-size:36px;font-weight:900;margin-bottom:16px; }
+        .motivation-box p { font-size:16px;color:var(--text2);line-height:1.8;max-width:600px;margin:0 auto 24px; }
+        .checklist { background:var(--card);border:1px solid var(--border);border-radius:20px;padding:32px; }
+        .checklist h3 { font-size:20px;font-weight:800;margin-bottom:20px; }
+        .check-item { display:flex;align-items:flex-start;gap:12px;padding:12px 0;border-bottom:1px solid var(--border); }
+        .check-item:last-child { border-bottom:none; }
+        .check-icon { width:24px;height:24px;background:rgba(16,185,129,0.2);border:1px solid #10b981;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#10b981;font-size:12px;flex-shrink:0;margin-top:2px; }
+        .check-text { font-size:14px;color:var(--text2);line-height:1.6; }
+        .cta-box { text-align:center;padding:60px 40px; }
+        .btn-primary { background:linear-gradient(135deg,#6366f1,#8b5cf6);color:white;padding:16px 40px;border-radius:12px;font-size:16px;font-weight:700;text-decoration:none;display:inline-block;transition:all 0.3s; }
+        .btn-primary:hover { transform:translateY(-3px);box-shadow:0 12px 35px rgba(99,102,241,0.4); }
+        footer { background:var(--bg2);border-top:1px solid var(--border);padding:40px;text-align:center;color:var(--text2);font-size:14px; }
+    </style>
+</head>
+<body>
+<nav>
+    <div class="nav-logo">⚡ AI Resume</div>
+    <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/builder">Builder</a>
+        <a href="/blog">Blog</a>
+        <a href="/tips">Fresher Tips</a>
+        <a href="/about">About</a>
+        <a href="/contact">Contact</a>
+        <a href="/builder" class="nav-cta">Build Free →</a>
+        <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+    </div>
+</nav>
+
+<div class="page-hero">
+    <div class="section-tag">Fresher Guide</div>
+    <h1 style="font-size:52px;font-weight:900;margin-bottom:16px;">The Complete <span class="gradient-text">Fresher's Guide</span></h1>
+    <p style="font-size:18px;color:var(--text2);max-width:600px;margin:0 auto;">Everything you need to know to land your first job in India. Real advice that actually works.</p>
+</div>
+
+<div class="content">
+
+    <!-- MOTIVATION -->
+    <div class="motivation-box">
+        <div style="font-size:48px;margin-bottom:16px;">💪</div>
+        <h2>You Are Not Alone</h2>
+        <p>Every year 1.5 crore Indians graduate and face the same struggle. No experience, no calls, no hope. But thousands break through every month. The difference? Strategy, not luck.</p>
+        <p style="font-size:18px;font-weight:700;color:white;">"Your first job is the hardest. Every job after that gets easier."</p>
+    </div>
+
+    <!-- RESUME TIPS -->
+    <div class="tip-section">
+        <h2>📄 Resume Tips for Freshers</h2>
+        <div class="tip-card">
+            <div class="tip-num">1</div>
+            <h3>Keep it to 1 Page</h3>
+            <p>As a fresher your resume should NEVER be more than 1 page. Recruiters spend 6 seconds on a resume. Make every line count.</p>
+        </div>
+        <div class="tip-card">
+            <div class="tip-num">2</div>
+            <h3>Focus on Projects, Not Marks</h3>
+            <p>No one cares about your CGPA as much as what you've built. Add every project you've worked on — college, personal, or open source.</p>
+        </div>
+        <div class="tip-card">
+            <div class="tip-num">3</div>
+            <h3>Use Action Verbs</h3>
+            <p>Instead of "I worked on a website", write "Developed a full-stack web application serving 500+ users". Numbers and action verbs get attention.</p>
+        </div>
+        <div class="tip-card">
+            <div class="tip-num">4</div>
+            <h3>ATS-Friendly Format</h3>
+            <p>Most companies use ATS software to filter resumes. Use simple formatting, no tables, and include keywords from the job description.</p>
+        </div>
+        <div class="tip-card">
+            <div class="tip-num">5</div>
+            <h3>Add GitHub and LinkedIn</h3>
+            <p>A GitHub profile with active projects and a professional LinkedIn can get you hired even without experience. Set them up today.</p>
+        </div>
+    </div>
+
+    <!-- JOB SEARCH TIPS -->
+    <div class="tip-section">
+        <h2>🔍 Job Search Strategy</h2>
+        <div class="tip-card">
+            <div class="tip-num">1</div>
+            <h3>Apply to 20 Jobs Per Day</h3>
+            <p>Most freshers apply to 5 jobs and wait. Apply to 20 every single day. It's a numbers game. The more you apply, the faster you get hired.</p>
+        </div>
+        <div class="tip-card">
+            <div class="tip-num">2</div>
+            <h3>Use LinkedIn, Not Just Naukri</h3>
+            <p>LinkedIn has jobs that are never posted on Naukri. Connect with HR managers directly and message them professionally.</p>
+        </div>
+        <div class="tip-card">
+            <div class="tip-num">3</div>
+            <h3>Target Startups First</h3>
+            <p>MNCs get 10,000 applications. Startups get 100. Your chances are 100x better. Many startups in India are paying well and growing fast.</p>
+        </div>
+        <div class="tip-card">
+            <div class="tip-num">4</div>
+            <h3>Use Referrals</h3>
+            <p>65% of jobs are filled through referrals. Message seniors from your college who are already working. Ask for a referral politely.</p>
+        </div>
+    </div>
+
+    <!-- MOTIVATION TIPS -->
+    <div class="tip-section">
+        <h2>🔥 Stay Motivated</h2>
+        <div class="tip-card">
+            <div class="tip-num">1</div>
+            <h3>Rejection is Normal</h3>
+            <p>Getting rejected 50-100 times before your first job is completely normal. It's not about your ability. It's about finding the right fit. Keep going.</p>
+        </div>
+        <div class="tip-card">
+            <div class="tip-num">2</div>
+            <h3>Use the Time to Build Skills</h3>
+            <p>While job hunting, spend 2 hours daily learning. Free courses on YouTube, Coursera and freeCodeCamp can transform your skillset in 3 months.</p>
+        </div>
+        <div class="tip-card">
+            <div class="tip-num">3</div>
+            <h3>Build in Public</h3>
+            <p>Post your projects on LinkedIn. Share what you're learning. This attracts recruiters and shows initiative even without formal experience.</p>
+        </div>
+        <div class="tip-card">
+            <div class="tip-num">4</div>
+            <h3>Set a Daily Routine</h3>
+            <p>Treat job hunting like a job. Wake up, apply to jobs, learn skills, build projects, network. Structure prevents despair.</p>
+        </div>
+    </div>
+
+    <!-- CHECKLIST -->
+    <div class="checklist">
+        <h3>✅ Fresher Job Hunt Checklist</h3>
+        <div class="check-item"><div class="check-icon">✓</div><div class="check-text">Professional resume built (use our AI builder above!)</div></div>
+        <div class="check-item"><div class="check-icon">✓</div><div class="check-text">LinkedIn profile complete with photo, summary and skills</div></div>
+        <div class="check-item"><div class="check-icon">✓</div><div class="check-text">GitHub profile with at least 3 projects</div></div>
+        <div class="check-item"><div class="check-icon">✓</div><div class="check-text">Applied to 20+ jobs today on LinkedIn, Naukri, Internshala</div></div>
+        <div class="check-item"><div class="check-icon">✓</div><div class="check-text">Messaged 5 seniors asking for referrals</div></div>
+        <div class="check-item"><div class="check-icon">✓</div><div class="check-text">Practiced 10 coding problems on LeetCode</div></div>
+        <div class="check-item"><div class="check-icon">✓</div><div class="check-text">Prepared answers for common HR questions</div></div>
+        <div class="check-item"><div class="check-icon">✓</div><div class="check-text">Followed up on applications sent last week</div></div>
+    </div>
+
+    <!-- CTA -->
+    <div class="cta-box">
+        <div style="font-size:48px;margin-bottom:16px;">🚀</div>
+        <h2 style="font-size:36px;font-weight:800;margin-bottom:16px;">Start with a <span class="gradient-text">Great Resume</span></h2>
+        <p style="font-size:16px;color:var(--text2);margin-bottom:28px;">The first step to getting hired is a professional resume. Build yours free in 10 seconds.</p>
+        <a href="/builder" class="btn-primary">Build My Free Resume →</a>
+    </div>
+
+</div>
+
+<footer>© 2026 AI Resume Builder — Made with ❤️ in India | Free Forever</footer>
+
+<script>
+    function toggleTheme() {
+        const body = document.body;
+        const btn = document.querySelector('.theme-toggle');
+        if (body.getAttribute('data-theme') === 'light') { body.removeAttribute('data-theme'); btn.textContent = '🌙'; localStorage.setItem('theme','dark'); }
+        else { body.setAttribute('data-theme','light'); btn.textContent = '☀️'; localStorage.setItem('theme','light'); }
+    }
+    if (localStorage.getItem('theme') === 'light') { document.body.setAttribute('data-theme','light'); document.querySelector('.theme-toggle').textContent = '☀️'; }
+</script>
+</body>
+</html>

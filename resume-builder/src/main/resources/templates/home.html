@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>AI Resume Builder - Free Professional Resumes | No Signup Required</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="description" content="Build professional resumes in 10 seconds with AI. Free, no signup required. 4 premium templates. Perfect for freshers and professionals in India."/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+    <style>
+        :root {
+            --bg: #0a0a0f;
+            --bg2: #111118;
+            --card: #16161f;
+            --border: rgba(255,255,255,0.08);
+            --text: #ffffff;
+            --text2: #94a3b8;
+            --accent: #6366f1;
+            --accent2: #8b5cf6;
+            --accent3: #ec4899;
+            --green: #10b981;
+        }
+        [data-theme="light"] {
+            --bg: #f8faff;
+            --bg2: #eef2ff;
+            --card: #ffffff;
+            --border: rgba(0,0,0,0.08);
+            --text: #0f172a;
+            --text2: #64748b;
+            --accent: #6366f1;
+            --accent2: #8b5cf6;
+            --accent3: #ec4899;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            transition: all 0.3s;
+            overflow-x: hidden;
+        }
+
+        /* NAVBAR */
+        nav {
+            position: fixed; top: 0; left: 0; right: 0;
+            z-index: 1000;
+            padding: 16px 40px;
+            display: flex; align-items: center; justify-content: space-between;
+            background: rgba(10,10,15,0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+        }
+        [data-theme="light"] nav { background: rgba(248,250,255,0.8); }
+        .nav-logo {
+            font-size: 20px; font-weight: 800;
+            background: linear-gradient(135deg, var(--accent), var(--accent3));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .nav-links { display: flex; gap: 32px; align-items: center; }
+        .nav-links a {
+            color: var(--text2); text-decoration: none;
+            font-size: 14px; font-weight: 500;
+            transition: color 0.2s;
+        }
+        .nav-links a:hover { color: var(--text); }
+        .nav-cta {
+            background: linear-gradient(135deg, var(--accent), var(--accent2));
+            color: white !important;
+            padding: 8px 20px;
+            border-radius: 8px;
+            font-weight: 600 !important;
+        }
+        .theme-toggle {
+            background: var(--card);
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 8px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        /* CANVAS */
+        #particles { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
+
+        /* HERO */
+        .hero {
+            min-height: 100vh;
+            display: flex; align-items: center; justify-content: center;
+            text-align: center;
+            padding: 120px 20px 80px;
+            position: relative;
+        }
+        .hero-content { position: relative; z-index: 1; max-width: 800px; }
+        .hero-badge {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: rgba(99,102,241,0.15);
+            border: 1px solid rgba(99,102,241,0.3);
+            color: #a5b4fc;
+            padding: 8px 20px; border-radius: 100px;
+            font-size: 13px; font-weight: 600;
+            margin-bottom: 28px;
+            animation: fadeInDown 0.8s ease;
+        }
+        .badge-dot {
+            width: 8px; height: 8px;
+            background: var(--green);
+            border-radius: 50%;
+            animation: pulse2 2s infinite;
+        }
+        @keyframes pulse2 {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.5); }
+        }
+        .hero h1 {
+            font-size: 68px; font-weight: 900;
+            line-height: 1.05; margin-bottom: 24px;
+            animation: fadeInUp 0.8s ease 0.2s both;
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, var(--accent), var(--accent2), var(--accent3));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-size: 200% 200%;
+            animation: gradientShift 3s ease infinite;
+        }
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        .hero p {
+            font-size: 20px; color: var(--text2);
+            max-width: 600px; margin: 0 auto 40px;
+            line-height: 1.7;
+            animation: fadeInUp 0.8s ease 0.4s both;
+        }
+        .hero-btns {
+            display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;
+            animation: fadeInUp 0.8s ease 0.6s both;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent), var(--accent2));
+            color: white; padding: 16px 36px;
+            border-radius: 12px; font-size: 16px; font-weight: 700;
+            text-decoration: none; transition: all 0.3s;
+            box-shadow: 0 0 30px rgba(99,102,241,0.4);
+        }
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 50px rgba(99,102,241,0.6);
+        }
+        .btn-secondary {
+            background: var(--card); color: var(--text);
+            padding: 16px 36px; border-radius: 12px;
+            font-size: 16px; font-weight: 700;
+            text-decoration: none; transition: all 0.3s;
+            border: 1px solid var(--border);
+        }
+        .btn-secondary:hover { transform: translateY(-3px); border-color: var(--accent); }
+
+        /* STATS */
+        .stats {
+            display: flex; justify-content: center; gap: 60px;
+            margin-top: 60px; flex-wrap: wrap;
+            animation: fadeInUp 0.8s ease 0.8s both;
+        }
+        .stat { text-align: center; }
+        .stat-num {
+            font-size: 36px; font-weight: 900;
+            background: linear-gradient(135deg, var(--accent), var(--accent3));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .stat-label { font-size: 13px; color: var(--text2); margin-top: 4px; }
+
+        /* FEATURES */
+        .section {
+            padding: 100px 40px;
+            position: relative; z-index: 1;
+        }
+        .section-title {
+            text-align: center; margin-bottom: 60px;
+        }
+        .section-tag {
+            display: inline-block;
+            background: rgba(99,102,241,0.15);
+            border: 1px solid rgba(99,102,241,0.3);
+            color: #a5b4fc;
+            padding: 4px 16px; border-radius: 100px;
+            font-size: 12px; font-weight: 700;
+            letter-spacing: 1px; text-transform: uppercase;
+            margin-bottom: 16px;
+        }
+        .section-title h2 {
+            font-size: 42px; font-weight: 800;
+            margin-bottom: 16px;
+        }
+        .section-title p { font-size: 18px; color: var(--text2); }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px; max-width: 1100px; margin: 0 auto;
+        }
+        .feature-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 20px; padding: 32px;
+            transition: all 0.3s;
+            position: relative; overflow: hidden;
+        }
+        .feature-card::before {
+            content: '';
+            position: absolute; top: 0; left: 0; right: 0; height: 2px;
+            background: linear-gradient(90deg, var(--accent), var(--accent3));
+            opacity: 0; transition: opacity 0.3s;
+        }
+        .feature-card:hover { transform: translateY(-8px); border-color: var(--accent); }
+        .feature-card:hover::before { opacity: 1; }
+        .feature-icon {
+            width: 56px; height: 56px;
+            background: linear-gradient(135deg, var(--accent), var(--accent2));
+            border-radius: 14px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 26px; margin-bottom: 20px;
+        }
+        .feature-card h3 { font-size: 18px; font-weight: 700; margin-bottom: 10px; }
+        .feature-card p { font-size: 14px; color: var(--text2); line-height: 1.7; }
+
+        /* HOW IT WORKS */
+        .steps-grid {
+            display: grid; grid-template-columns: repeat(4, 1fr);
+            gap: 24px; max-width: 1100px; margin: 0 auto;
+            position: relative;
+        }
+        .step-card {
+            text-align: center; padding: 32px 20px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            transition: all 0.3s;
+        }
+        .step-card:hover { transform: translateY(-5px); border-color: var(--accent); }
+        .step-num {
+            width: 50px; height: 50px;
+            background: linear-gradient(135deg, var(--accent), var(--accent2));
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 18px; font-weight: 800; color: white;
+            margin: 0 auto 16px;
+        }
+        .step-card h3 { font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+        .step-card p { font-size: 13px; color: var(--text2); line-height: 1.6; }
+
+        /* TEMPLATES */
+        .templates-grid {
+            display: grid; grid-template-columns: repeat(4, 1fr);
+            gap: 20px; max-width: 1100px; margin: 0 auto 40px;
+        }
+        .template-preview-card {
+            border-radius: 16px; overflow: hidden;
+            border: 2px solid var(--border);
+            transition: all 0.3s; cursor: pointer;
+        }
+        .template-preview-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--accent);
+            box-shadow: 0 20px 40px rgba(99,102,241,0.2);
+        }
+        .template-thumb {
+            height: 200px; position: relative;
+        }
+        .t-modern-prev { background: linear-gradient(90deg, #2563eb 35%, #f1f5f9 35%); }
+        .t-classic-prev { background: white; border-bottom: 1px solid #e2e8f0; }
+        .t-minimal-prev { background: linear-gradient(180deg, white 60%, #f0fdf4 100%); border-left: 6px solid #0d9488; }
+        .t-creative-prev { background: linear-gradient(135deg, #1e1e2e 50%, #7c3aed33 100%); }
+        .template-label {
+            padding: 12px 16px;
+            background: var(--card);
+            font-size: 14px; font-weight: 700;
+        }
+        .template-label span { font-size: 12px; color: var(--text2); font-weight: 400; }
+
+        /* TESTIMONIALS */
+        .testimonials-grid {
+            display: grid; grid-template-columns: repeat(3, 1fr);
+            gap: 24px; max-width: 1100px; margin: 0 auto;
+        }
+        .testimonial-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 20px; padding: 28px;
+            transition: all 0.3s;
+        }
+        .testimonial-card:hover { transform: translateY(-5px); border-color: var(--accent); }
+        .stars { color: #fbbf24; font-size: 18px; margin-bottom: 14px; }
+        .testimonial-text { font-size: 14px; color: var(--text2); line-height: 1.7; margin-bottom: 20px; }
+        .testimonial-author { display: flex; align-items: center; gap: 12px; }
+        .author-avatar {
+            width: 40px; height: 40px; border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent), var(--accent3));
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 700; color: white; font-size: 16px;
+        }
+        .author-name { font-size: 14px; font-weight: 700; }
+        .author-role { font-size: 12px; color: var(--text2); }
+
+        /* CTA */
+        .cta-section {
+            padding: 100px 40px; text-align: center;
+            position: relative; z-index: 1;
+        }
+        .cta-box {
+            max-width: 700px; margin: 0 auto;
+            background: linear-gradient(135deg, rgba(99,102,241,0.2), rgba(139,92,246,0.2));
+            border: 1px solid rgba(99,102,241,0.3);
+            border-radius: 28px; padding: 60px 40px;
+            position: relative; overflow: hidden;
+        }
+        .cta-box h2 { font-size: 42px; font-weight: 800; margin-bottom: 16px; }
+        .cta-box p { font-size: 18px; color: var(--text2); margin-bottom: 32px; }
+
+        /* FOOTER */
+        footer {
+            background: var(--bg2);
+            border-top: 1px solid var(--border);
+            padding: 60px 40px 30px;
+            position: relative; z-index: 1;
+        }
+        .footer-grid {
+            display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 40px; max-width: 1100px; margin: 0 auto 40px;
+        }
+        .footer-logo {
+            font-size: 22px; font-weight: 800;
+            background: linear-gradient(135deg, var(--accent), var(--accent3));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            margin-bottom: 12px;
+        }
+        .footer-desc { font-size: 14px; color: var(--text2); line-height: 1.7; }
+        .footer-col h4 { font-size: 14px; font-weight: 700; margin-bottom: 16px; }
+        .footer-col a {
+            display: block; color: var(--text2);
+            text-decoration: none; font-size: 14px;
+            margin-bottom: 10px; transition: color 0.2s;
+        }
+        .footer-col a:hover { color: var(--accent); }
+        .footer-bottom {
+            max-width: 1100px; margin: 0 auto;
+            padding-top: 24px; border-top: 1px solid var(--border);
+            display: flex; justify-content: space-between;
+            font-size: 13px; color: var(--text2);
+        }
+
+        /* ANIMATIONS */
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .reveal {
+            opacity: 0; transform: translateY(40px);
+            transition: all 0.8s ease;
+        }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+
+        /* FLOATING ELEMENTS */
+        .float-element {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.15;
+            animation: float 8s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-30px) scale(1.05); }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 38px; }
+            .features-grid { grid-template-columns: 1fr; }
+            .steps-grid { grid-template-columns: repeat(2, 1fr); }
+            .templates-grid { grid-template-columns: repeat(2, 1fr); }
+            .testimonials-grid { grid-template-columns: 1fr; }
+            .footer-grid { grid-template-columns: 1fr 1fr; }
+            nav { padding: 16px 20px; }
+            .nav-links { gap: 16px; }
+            .section { padding: 60px 20px; }
+            .stats { gap: 30px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- PARTICLES -->
+<canvas id="particles"></canvas>
+
+<!-- FLOATING BLOBS -->
+<div class="float-element" style="width:500px;height:500px;background:#6366f1;top:10%;left:-10%;animation-delay:0s;"></div>
+<div class="float-element" style="width:400px;height:400px;background:#ec4899;top:50%;right:-10%;animation-delay:3s;"></div>
+<div class="float-element" style="width:300px;height:300px;background:#8b5cf6;bottom:10%;left:30%;animation-delay:5s;"></div>
+
+<!-- NAVBAR -->
+<nav>
+    <div class="nav-logo">⚡ AI Resume</div>
+    <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/builder">Builder</a>
+        <a href="/blog">Blog</a>
+        <a href="/tips">Fresher Tips</a>
+        <a href="/about">About</a>
+        <a href="/contact">Contact</a>
+        <a href="/builder" class="nav-cta">Build Free →</a>
+        <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+    </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+    <div class="hero-content">
+        <div class="hero-badge">
+            <div class="badge-dot"></div>
+            ✨ 100% Free — No Signup Required
+        </div>
+        <h1>Build Your <span class="gradient-text">Dream Resume</span><br/>with AI in Seconds</h1>
+        <p>The smartest AI resume builder for India. Create stunning professional resumes in 10 seconds. No account needed, completely free forever.</p>
+        <div class="hero-btns">
+            <a href="/builder" class="btn-primary">🚀 Build My Resume Free</a>
+            <a href="/tips" class="btn-secondary">💡 Fresher Tips</a>
+        </div>
+        <div class="stats">
+            <div class="stat">
+                <div class="stat-num" id="counter1">0</div>
+                <div class="stat-label">Resumes Generated</div>
+            </div>
+            <div class="stat">
+                <div class="stat-num">10s</div>
+                <div class="stat-label">Average Build Time</div>
+            </div>
+            <div class="stat">
+                <div class="stat-num">4</div>
+                <div class="stat-label">Premium Templates</div>
+            </div>
+            <div class="stat">
+                <div class="stat-num">Free</div>
+                <div class="stat-label">Forever</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FEATURES -->
+<section class="section">
+    <div class="section-title reveal">
+        <div class="section-tag">Features</div>
+        <h2>Everything You Need to<br/><span class="gradient-text">Land Your Dream Job</span></h2>
+        <p>Powerful features designed for Indian job seekers</p>
+    </div>
+    <div class="features-grid">
+        <div class="feature-card reveal">
+            <div class="feature-icon">🤖</div>
+            <h3>AI Powered Generation</h3>
+            <p>Our advanced AI writes professional content tailored to your experience and skills automatically.</p>
+        </div>
+        <div class="feature-card reveal">
+            <div class="feature-icon">⚡</div>
+            <h3>10 Second Creation</h3>
+            <p>Fill in your details and get a complete professional resume in under 10 seconds. Faster than any competitor.</p>
+        </div>
+        <div class="feature-card reveal">
+            <div class="feature-icon">🎨</div>
+            <h3>4 Premium Templates</h3>
+            <p>Modern, Classic, Minimal and Creative templates. All ATS-friendly and recruiter approved.</p>
+        </div>
+        <div class="feature-card reveal">
+            <div class="feature-icon">📄</div>
+            <h3>PDF Download</h3>
+            <p>Download your resume as a perfect PDF instantly. Print-ready and professionally formatted.</p>
+        </div>
+        <div class="feature-card reveal">
+            <div class="feature-icon">🔒</div>
+            <h3>No Signup Required</h3>
+            <p>No account, no email, no password. Just fill and download. Your privacy is our priority.</p>
+        </div>
+        <div class="feature-card reveal">
+            <div class="feature-icon">📱</div>
+            <h3>Mobile Friendly</h3>
+            <p>Works perfectly on any device. Build your resume on phone, tablet or desktop.</p>
+        </div>
+    </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="section" style="background:var(--bg2);">
+    <div class="section-title reveal">
+        <div class="section-tag">How It Works</div>
+        <h2>3 Simple Steps to Your<br/><span class="gradient-text">Perfect Resume</span></h2>
+    </div>
+    <div class="steps-grid">
+        <div class="step-card reveal">
+            <div class="step-num">1</div>
+            <h3>Fill Your Details</h3>
+            <p>Enter your name, skills, experience and education. Takes less than 2 minutes.</p>
+        </div>
+        <div class="step-card reveal">
+            <div class="step-num">2</div>
+            <h3>Choose Template</h3>
+            <p>Pick from 4 stunning professional templates designed for Indian job market.</p>
+        </div>
+        <div class="step-card reveal">
+            <div class="step-num">3</div>
+            <h3>AI Generates</h3>
+            <p>Our AI instantly writes professional content and formats your perfect resume.</p>
+        </div>
+        <div class="step-card reveal">
+            <div class="step-num">4</div>
+            <h3>Download PDF</h3>
+            <p>Download your professional resume as PDF and start applying to jobs today!</p>
+        </div>
+    </div>
+</section>
+
+<!-- TEMPLATES -->
+<section class="section">
+    <div class="section-title reveal">
+        <div class="section-tag">Templates</div>
+        <h2>Choose Your <span class="gradient-text">Perfect Style</span></h2>
+        <p>All templates are ATS-friendly and recruiter approved</p>
+    </div>
+    <div class="templates-grid">
+        <div class="template-preview-card reveal" onclick="window.location.href='/builder'">
+            <div class="template-thumb t-modern-prev"></div>
+            <div class="template-label">💼 Modern<br/><span>Blue sidebar layout</span></div>
+        </div>
+        <div class="template-preview-card reveal" onclick="window.location.href='/builder'">
+            <div class="template-thumb t-classic-prev"></div>
+            <div class="template-label">📄 Classic<br/><span>Formal & elegant</span></div>
+        </div>
+        <div class="template-preview-card reveal" onclick="window.location.href='/builder'">
+            <div class="template-thumb t-minimal-prev"></div>
+            <div class="template-label">⚡ Minimal<br/><span>Clean & simple</span></div>
+        </div>
+        <div class="template-preview-card reveal" onclick="window.location.href='/builder'">
+            <div class="template-thumb t-creative-prev"></div>
+            <div class="template-label">🎨 Creative<br/><span>Bold & unique</span></div>
+        </div>
+    </div>
+    <div style="text-align:center;">
+        <a href="/builder" class="btn-primary">Try All Templates Free →</a>
+    </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="section" style="background:var(--bg2);">
+    <div class="section-title reveal">
+        <div class="section-tag">Testimonials</div>
+        <h2>Loved by Job Seekers<br/><span class="gradient-text">Across India</span></h2>
+    </div>
+    <div class="testimonials-grid">
+        <div class="testimonial-card reveal">
+            <div class="stars">⭐⭐⭐⭐⭐</div>
+            <p class="testimonial-text">"Got my resume ready in 10 seconds! The AI wrote better content than I could. Got interview calls within a week of applying!"</p>
+            <div class="testimonial-author">
+                <div class="author-avatar">R</div>
+                <div>
+                    <div class="author-name">Rahul Sharma</div>
+                    <div class="author-role">Software Developer, Bangalore</div>
+                </div>
+            </div>
+        </div>
+        <div class="testimonial-card reveal">
+            <div class="stars">⭐⭐⭐⭐⭐</div>
+            <p class="testimonial-text">"As a fresher I had no idea how to make resume. This tool made it so easy. The Modern template looks so professional!"</p>
+            <div class="testimonial-author">
+                <div class="author-avatar">P</div>
+                <div>
+                    <div class="author-name">Priya Nair</div>
+                    <div class="author-role">Fresh Graduate, Kerala</div>
+                </div>
+            </div>
+        </div>
+        <div class="testimonial-card reveal">
+            <div class="stars">⭐⭐⭐⭐⭐</div>
+            <p class="testimonial-text">"No signup, no payment, just pure value. The best free resume builder I have used. Highly recommend to all job seekers!"</p>
+            <div class="testimonial-author">
+                <div class="author-avatar">A</div>
+                <div>
+                    <div class="author-name">Arjun Patel</div>
+                    <div class="author-role">MBA Graduate, Ahmedabad</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+    <div class="cta-box reveal">
+        <h2>Ready to Land Your<br/><span class="gradient-text">Dream Job?</span></h2>
+        <p>Join thousands of Indians who built their resume with AI. Free, fast, and professional.</p>
+        <a href="/builder" class="btn-primary" style="font-size:18px;padding:18px 48px;">
+            🚀 Build My Free Resume Now
+        </a>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <div class="footer-grid">
+        <div>
+            <div class="footer-logo">⚡ AI Resume Builder</div>
+            <p class="footer-desc">The smartest free AI resume builder for India. Create professional resumes in seconds. No signup required.</p>
+        </div>
+        <div class="footer-col">
+            <h4>Product</h4>
+            <a href="/builder">Resume Builder</a>
+            <a href="/builder">Templates</a>
+            <a href="/tips">Fresher Tips</a>
+            <a href="/blog">Blog</a>
+        </div>
+        <div class="footer-col">
+            <h4>Company</h4>
+            <a href="/about">About Us</a>
+            <a href="/contact">Contact</a>
+        </div>
+        <div class="footer-col">
+            <h4>Contact</h4>
+            <a href="mailto:goudakiran124@gmail.com">goudakiran124@gmail.com</a>
+            <a href="/contact">Get in Touch</a>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <span>© 2026 AI Resume Builder. Made with ❤️ in India</span>
+        <span>Free Forever • No Signup • No Payment</span>
+    </div>
+</footer>
+
+<script>
+    // PARTICLES
+    const canvas = document.getElementById('particles');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const particles = [];
+    for (let i = 0; i < 80; i++) {
+        particles.push({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height,
+            vx: (Math.random() - 0.5) * 0.5,
+            vy: (Math.random() - 0.5) * 0.5,
+            size: Math.random() * 2 + 0.5,
+            opacity: Math.random() * 0.5 + 0.1
+        });
+    }
+
+    function drawParticles() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        particles.forEach(p => {
+            p.x += p.vx; p.y += p.vy;
+            if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+            if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(99,102,241,${p.opacity})`;
+            ctx.fill();
+        });
+
+        // Connect nearby particles
+        for (let i = 0; i < particles.length; i++) {
+            for (let j = i + 1; j < particles.length; j++) {
+                const dx = particles[i].x - particles[j].x;
+                const dy = particles[i].y - particles[j].y;
+                const dist = Math.sqrt(dx*dx + dy*dy);
+                if (dist < 120) {
+                    ctx.beginPath();
+                    ctx.strokeStyle = `rgba(99,102,241,${0.1 * (1 - dist/120)})`;
+                    ctx.lineWidth = 0.5;
+                    ctx.moveTo(particles[i].x, particles[i].y);
+                    ctx.lineTo(particles[j].x, particles[j].y);
+                    ctx.stroke();
+                }
+            }
+        }
+        requestAnimationFrame(drawParticles);
+    }
+    drawParticles();
+
+    window.addEventListener('resize', () => {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    });
+
+    // THEME TOGGLE
+    function toggleTheme() {
+        const body = document.body;
+        const btn = document.querySelector('.theme-toggle');
+        if (body.getAttribute('data-theme') === 'light') {
+            body.removeAttribute('data-theme');
+            btn.textContent = '🌙';
+            localStorage.setItem('theme', 'dark');
+        } else {
+            body.setAttribute('data-theme', 'light');
+            btn.textContent = '☀️';
+            localStorage.setItem('theme', 'light');
+        }
+    }
+
+    // Load saved theme
+    if (localStorage.getItem('theme') === 'light') {
+        document.body.setAttribute('data-theme', 'light');
+        document.querySelector('.theme-toggle').textContent = '☀️';
+    }
+
+    // SCROLL REVEAL
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // COUNTER ANIMATION
+    function animateCounter(el, target, duration) {
+        let start = 0;
+        const increment = target / (duration / 16);
+        const timer = setInterval(() => {
+            start += increment;
+            if (start >= target) { start = target; clearInterval(timer); }
+            el.textContent = Math.floor(start).toLocaleString() + '+';
+        }, 16);
+    }
+
+    // Start counter when visible
+    const counterObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                animateCounter(document.getElementById('counter1'), 1250, 2000);
+                counterObserver.disconnect();
+            }
+        });
+    });
+    counterObserver.observe(document.getElementById('counter1'));
+</script>
+</body>
+</html>

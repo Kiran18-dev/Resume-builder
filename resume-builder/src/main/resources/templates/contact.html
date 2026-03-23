@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Contact - AI Resume Builder</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+    <style>
+        :root { --bg:#0a0a0f;--bg2:#111118;--card:#16161f;--border:rgba(255,255,255,0.08);--text:#ffffff;--text2:#94a3b8;--accent:#6366f1;--accent2:#8b5cf6;--accent3:#ec4899; }
+        [data-theme="light"] { --bg:#f8faff;--bg2:#eef2ff;--card:#ffffff;--border:rgba(0,0,0,0.08);--text:#0f172a;--text2:#64748b; }
+        * { box-sizing:border-box;margin:0;padding:0; }
+        body { font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);transition:all 0.3s; }
+        nav { position:fixed;top:0;left:0;right:0;z-index:1000;padding:16px 40px;display:flex;align-items:center;justify-content:space-between;background:rgba(10,10,15,0.8);backdrop-filter:blur(20px);border-bottom:1px solid var(--border); }
+        [data-theme="light"] nav { background:rgba(248,250,255,0.8); }
+        .nav-logo { font-size:20px;font-weight:800;background:linear-gradient(135deg,#6366f1,#ec4899);-webkit-background-clip:text;-webkit-text-fill-color:transparent; }
+        .nav-links { display:flex;gap:32px;align-items:center; }
+        .nav-links a { color:var(--text2);text-decoration:none;font-size:14px;font-weight:500; }
+        .nav-links a:hover { color:var(--text); }
+        .nav-cta { background:linear-gradient(135deg,#6366f1,#8b5cf6);color:white!important;padding:8px 20px;border-radius:8px;font-weight:600!important; }
+        .theme-toggle { background:var(--card);border:1px solid var(--border);color:var(--text);padding:8px 12px;border-radius:8px;cursor:pointer;font-size:16px; }
+        .page-hero { padding:140px 40px 60px;text-align:center; }
+        .section-tag { display:inline-block;background:rgba(99,102,241,0.15);border:1px solid rgba(99,102,241,0.3);color:#a5b4fc;padding:4px 16px;border-radius:100px;font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:16px; }
+        .gradient-text { background:linear-gradient(135deg,#6366f1,#8b5cf6,#ec4899);-webkit-background-clip:text;-webkit-text-fill-color:transparent; }
+        .contact-grid { display:grid;grid-template-columns:1fr 1fr;gap:40px;max-width:900px;margin:60px auto;padding:0 40px; }
+        .contact-info h2 { font-size:32px;font-weight:800;margin-bottom:16px; }
+        .contact-info p { font-size:16px;color:var(--text2);line-height:1.8;margin-bottom:32px; }
+        .contact-item { display:flex;align-items:center;gap:16px;padding:20px;background:var(--card);border:1px solid var(--border);border-radius:14px;margin-bottom:16px;transition:all 0.3s; }
+        .contact-item:hover { border-color:#6366f1;transform:translateX(5px); }
+        .contact-icon { width:48px;height:48px;background:linear-gradient(135deg,#6366f1,#8b5cf6);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0; }
+        .contact-label { font-size:12px;color:var(--text2);font-weight:600;text-transform:uppercase;letter-spacing:0.5px; }
+        .contact-value { font-size:15px;font-weight:600;margin-top:2px; }
+        .contact-value a { color:var(--text);text-decoration:none; }
+        .contact-value a:hover { color:#6366f1; }
+        .contact-form { background:var(--card);border:1px solid var(--border);border-radius:24px;padding:40px; }
+        .contact-form h3 { font-size:24px;font-weight:800;margin-bottom:24px; }
+        .form-group { margin-bottom:20px; }
+        label { display:block;font-size:12px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px; }
+        input, textarea { width:100%;padding:12px 16px;background:var(--bg);border:1.5px solid var(--border);border-radius:10px;color:var(--text);font-family:'Inter',sans-serif;font-size:14px;transition:all 0.2s; }
+        input:focus, textarea:focus { outline:none;border-color:#6366f1;box-shadow:0 0 0 3px rgba(99,102,241,0.1); }
+        textarea { height:120px;resize:vertical; }
+        .btn-submit { width:100%;padding:14px;background:linear-gradient(135deg,#6366f1,#8b5cf6);color:white;border:none;border-radius:10px;font-size:16px;font-weight:700;cursor:pointer;transition:all 0.2s;font-family:'Inter',sans-serif; }
+        .btn-submit:hover { transform:translateY(-2px);box-shadow:0 8px 25px rgba(99,102,241,0.4); }
+        footer { background:var(--bg2);border-top:1px solid var(--border);padding:40px;text-align:center;color:var(--text2);font-size:14px;margin-top:80px; }
+    </style>
+</head>
+<body>
+<nav>
+    <div class="nav-logo">⚡ AI Resume</div>
+    <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/builder">Builder</a>
+        <a href="/blog">Blog</a>
+        <a href="/tips">Fresher Tips</a>
+        <a href="/about">About</a>
+        <a href="/contact">Contact</a>
+        <a href="/builder" class="nav-cta">Build Free →</a>
+        <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+    </div>
+</nav>
+
+<div class="page-hero">
+    <div class="section-tag">Contact</div>
+    <h1 style="font-size:52px;font-weight:900;margin-bottom:16px;">Get In <span class="gradient-text">Touch</span></h1>
+    <p style="font-size:18px;color:var(--text2);">Have questions or feedback? We'd love to hear from you!</p>
+</div>
+
+<div class="contact-grid">
+    <div class="contact-info">
+        <h2>Let's Talk!</h2>
+        <p>Whether you have feedback, suggestions, or just want to say hi — reach out anytime. We respond within 24 hours.</p>
+        <div class="contact-item">
+            <div class="contact-icon">📧</div>
+            <div>
+                <div class="contact-label">Email</div>
+                <div class="contact-value"><a href="mailto:goudakiran124@gmail.com">goudakiran124@gmail.com</a></div>
+            </div>
+        </div>
+        <div class="contact-item">
+            <div class="contact-icon">📍</div>
+            <div>
+                <div class="contact-label">Location</div>
+                <div class="contact-value">Bangalore, Karnataka, India</div>
+            </div>
+        </div>
+        <div class="contact-item">
+            <div class="contact-icon">⚡</div>
+            <div>
+                <div class="contact-label">Response Time</div>
+                <div class="contact-value">Within 24 hours</div>
+            </div>
+        </div>
+        <div class="contact-item">
+            <div class="contact-icon">🆓</div>
+            <div>
+                <div class="contact-label">Support</div>
+                <div class="contact-value">Free forever — no billing issues!</div>
+            </div>
+        </div>
+    </div>
+    <div class="contact-form">
+        <h3>Send a Message</h3>
+        <div class="form-group">
+            <label>Your Name</label>
+            <input type="text" placeholder="Kiran Gowda"/>
+        </div>
+        <div class="form-group">
+            <label>Email Address</label>
+            <input type="email" placeholder="kiran@gmail.com"/>
+        </div>
+        <div class="form-group">
+            <label>Subject</label>
+            <input type="text" placeholder="Feedback / Suggestion / Bug Report"/>
+        </div>
+        <div class="form-group">
+            <label>Message</label>
+            <textarea placeholder="Tell us what you think..."></textarea>
+        </div>
+        <button class="btn-submit" onclick="sendEmail()">Send Message →</button>
+    </div>
+</div>
+
+<footer>© 2026 AI Resume Builder — Made with ❤️ in India | Free Forever</footer>
+
+<script>
+    function toggleTheme() {
+        const body = document.body;
+        const btn = document.querySelector('.theme-toggle');
+        if (body.getAttribute('data-theme') === 'light') { body.removeAttribute('data-theme'); btn.textContent = '🌙'; localStorage.setItem('theme','dark'); }
+        else { body.setAttribute('data-theme','light'); btn.textContent = '☀️'; localStorage.setItem('theme','light'); }
+    }
+    if (localStorage.getItem('theme') === 'light') { document.body.setAttribute('data-theme','light'); document.querySelector('.theme-toggle').textContent = '☀️'; }
+
+    function sendEmail() {
+        const name = document.querySelectorAll('input')[0].value;
+        const email = document.querySelectorAll('input')[1].value;
+        const subject = document.querySelectorAll('input')[2].value;
+        const message = document.querySelector('textarea').value;
+        window.location.href = `mailto:goudakiran124@gmail.com?subject=${subject}&body=From: ${name} (${email})%0A%0A${message}`;
+    }
+</script>
+</body>
+</html>
