@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>About Us - AI Resume Builder</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+  <style>
+    :root { --bg:#0a0a0f;--bg2:#111118;--card:#16161f;--border:rgba(255,255,255,0.08);--text:#ffffff;--text2:#94a3b8;--accent:#6366f1;--accent2:#8b5cf6;--accent3:#ec4899; }
+    [data-theme="light"] { --bg:#f8faff;--bg2:#eef2ff;--card:#ffffff;--border:rgba(0,0,0,0.08);--text:#0f172a;--text2:#64748b; }
+    * { box-sizing:border-box;margin:0;padding:0; }
+    body { font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);transition:all 0.3s; }
+    nav { position:fixed;top:0;left:0;right:0;z-index:1000;padding:16px 40px;display:flex;align-items:center;justify-content:space-between;background:rgba(10,10,15,0.8);backdrop-filter:blur(20px);border-bottom:1px solid var(--border); }
+    [data-theme="light"] nav { background:rgba(248,250,255,0.8); }
+    .nav-logo { font-size:20px;font-weight:800;background:linear-gradient(135deg,#6366f1,#ec4899);-webkit-background-clip:text;-webkit-text-fill-color:transparent; }
+    .nav-links { display:flex;gap:32px;align-items:center; }
+    .nav-links a { color:var(--text2);text-decoration:none;font-size:14px;font-weight:500;transition:color 0.2s; }
+    .nav-links a:hover { color:var(--text); }
+    .nav-cta { background:linear-gradient(135deg,#6366f1,#8b5cf6);color:white!important;padding:8px 20px;border-radius:8px;font-weight:600!important; }
+    .theme-toggle { background:var(--card);border:1px solid var(--border);color:var(--text);padding:8px 12px;border-radius:8px;cursor:pointer;font-size:16px; }
+    .page-hero { padding:140px 40px 80px;text-align:center; }
+    .section-tag { display:inline-block;background:rgba(99,102,241,0.15);border:1px solid rgba(99,102,241,0.3);color:#a5b4fc;padding:4px 16px;border-radius:100px;font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:16px; }
+    .page-hero h1 { font-size:52px;font-weight:900;margin-bottom:16px; }
+    .gradient-text { background:linear-gradient(135deg,#6366f1,#8b5cf6,#ec4899);-webkit-background-clip:text;-webkit-text-fill-color:transparent; }
+    .page-hero p { font-size:18px;color:var(--text2);max-width:600px;margin:0 auto; }
+    .section { padding:80px 40px;max-width:1100px;margin:0 auto; }
+    .mission-grid { display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center; }
+    .mission-text h2 { font-size:36px;font-weight:800;margin-bottom:16px; }
+    .mission-text p { font-size:16px;color:var(--text2);line-height:1.8;margin-bottom:16px; }
+    .values-grid { display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:60px; }
+    .value-card { background:var(--card);border:1px solid var(--border);border-radius:20px;padding:32px;text-align:center;transition:all 0.3s; }
+    .value-card:hover { transform:translateY(-5px);border-color:#6366f1; }
+    .value-icon { font-size:40px;margin-bottom:16px; }
+    .value-card h3 { font-size:18px;font-weight:700;margin-bottom:8px; }
+    .value-card p { font-size:14px;color:var(--text2);line-height:1.7; }
+    .team-section { background:var(--bg2);padding:80px 40px;text-align:center; }
+    .team-card { background:var(--card);border:1px solid var(--border);border-radius:20px;padding:40px;max-width:400px;margin:40px auto; }
+    .team-avatar { width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,#6366f1,#ec4899);display:flex;align-items:center;justify-content:center;font-size:32px;font-weight:800;color:white;margin:0 auto 16px; }
+    .team-name { font-size:20px;font-weight:800;margin-bottom:4px; }
+    .team-role { font-size:14px;color:#6366f1;font-weight:600;margin-bottom:12px; }
+    .team-bio { font-size:14px;color:var(--text2);line-height:1.7; }
+    footer { background:var(--bg2);border-top:1px solid var(--border);padding:40px;text-align:center;color:var(--text2);font-size:14px; }
+  </style>
+</head>
+<body>
+<nav>
+  <div class="nav-logo">⚡ AI Resume</div>
+  <div class="nav-links">
+    <a href="/">Home</a>
+    <a href="/builder">Builder</a>
+    <a href="/blog">Blog</a>
+    <a href="/tips">Fresher Tips</a>
+    <a href="/about">About</a>
+    <a href="/contact">Contact</a>
+    <a href="/builder" class="nav-cta">Build Free →</a>
+    <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+  </div>
+</nav>
+
+<div class="page-hero">
+  <div class="section-tag">About Us</div>
+  <h1>Built for <span class="gradient-text">India's</span> Job Seekers</h1>
+  <p>We believe every Indian deserves a professional resume without paying a rupee.</p>
+</div>
+
+<div class="section">
+  <div class="mission-grid">
+    <div class="mission-text">
+      <div class="section-tag">Our Mission</div>
+      <h2>Democratizing Professional Resumes in India</h2>
+      <p>Every year millions of Indian students graduate and struggle to create a professional resume. Most resume builders charge ₹500-2000 for basic features.</p>
+      <p>We built AI Resume Builder to change that. Using the latest AI technology, we generate professional resumes in 10 seconds — completely free, forever.</p>
+      <p>No hidden charges. No signup. No data selling. Just pure value for Indian job seekers.</p>
+    </div>
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:24px;padding:40px;text-align:center;">
+      <div style="font-size:60px;margin-bottom:16px;">🇮🇳</div>
+      <div style="font-size:48px;font-weight:900;background:linear-gradient(135deg,#6366f1,#ec4899);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">1000+</div>
+      <div style="color:var(--text2);margin-bottom:24px;">Resumes Generated</div>
+      <div style="font-size:36px;font-weight:900;background:linear-gradient(135deg,#6366f1,#ec4899);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Free</div>
+      <div style="color:var(--text2);">Forever — No Credit Card</div>
+    </div>
+  </div>
+
+  <div class="values-grid">
+    <div class="value-card">
+      <div class="value-icon">🆓</div>
+      <h3>Always Free</h3>
+      <p>We believe quality tools should be accessible to everyone regardless of financial situation.</p>
+    </div>
+    <div class="value-card">
+      <div class="value-icon">🔒</div>
+      <h3>Privacy First</h3>
+      <p>No signup, no data storage, no tracking. Your information stays private always.</p>
+    </div>
+    <div class="value-card">
+      <div class="value-icon">🤖</div>
+      <h3>AI Powered</h3>
+      <p>Latest AI technology generates professional content that helps you stand out from competition.</p>
+    </div>
+  </div>
+</div>
+
+<div class="team-section">
+  <div class="section-tag">The Builder</div>
+  <h2 style="font-size:36px;font-weight:800;margin:16px 0;">Meet the Creator</h2>
+  <div class="team-card">
+    <div class="team-avatar">K</div>
+    <div class="team-name">Kiran Gowda</div>
+    <div class="team-role">Founder & Developer</div>
+    <p class="team-bio">Java developer passionate about building tools that help Indian job seekers. Built this AI Resume Builder to solve the problem of expensive resume services in India.</p>
+    <div style="margin-top:16px;">
+      <a href="mailto:goudakiran124@gmail.com" style="color:#6366f1;font-size:14px;">goudakiran124@gmail.com</a>
+    </div>
+  </div>
+</div>
+
+<footer>© 2026 AI Resume Builder — Made with ❤️ in India | Free Forever</footer>
+
+<script>
+  function toggleTheme() {
+      const body = document.body;
+      const btn = document.querySelector('.theme-toggle');
+      if (body.getAttribute('data-theme') === 'light') { body.removeAttribute('data-theme'); btn.textContent = '🌙'; localStorage.setItem('theme','dark'); }
+      else { body.setAttribute('data-theme','light'); btn.textContent = '☀️'; localStorage.setItem('theme','light'); }
+  }
+  if (localStorage.getItem('theme') === 'light') { document.body.setAttribute('data-theme','light'); document.querySelector('.theme-toggle').textContent = '☀️'; }
+</script>
+</body>
+</html>

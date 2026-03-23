@@ -14,10 +14,38 @@
             color: #1e293b;
         }
 
+        /* NAVBAR */
+        nav {
+            position: fixed; top: 0; left: 0; right: 0;
+            z-index: 1000;
+            padding: 14px 40px;
+            display: flex; align-items: center; justify-content: space-between;
+            background: rgba(15,15,26,0.9);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+        .nav-logo {
+            font-size: 18px; font-weight: 800;
+            background: linear-gradient(135deg, #667eea, #ec4899);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            text-decoration: none;
+        }
+        .nav-links { display: flex; gap: 24px; align-items: center; }
+        .nav-links a {
+            color: #94a3b8; text-decoration: none;
+            font-size: 14px; font-weight: 500; transition: color 0.2s;
+        }
+        .nav-links a:hover { color: white; }
+        .nav-cta {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white !important; padding: 7px 18px;
+            border-radius: 8px; font-weight: 600 !important;
+        }
+
         /* HERO HEADER */
         .hero {
             background: linear-gradient(135deg, #0f0f1a 0%, #1a1a2e 50%, #16213e 100%);
-            padding: 60px 20px 80px;
+            padding: 100px 20px 80px;
             text-align: center;
             position: relative;
             overflow: hidden;
@@ -26,10 +54,8 @@
         .hero::before {
             content: '';
             position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
+            top: -50%; left: -50%;
+            width: 200%; height: 200%;
             background: radial-gradient(circle at 30% 50%, rgba(102,126,234,0.15) 0%, transparent 50%),
                         radial-gradient(circle at 70% 50%, rgba(118,75,162,0.15) 0%, transparent 50%);
             animation: pulse 8s ease-in-out infinite;
@@ -45,43 +71,32 @@
             background: rgba(102,126,234,0.2);
             border: 1px solid rgba(102,126,234,0.4);
             color: #a5b4fc;
-            padding: 6px 16px;
-            border-radius: 100px;
-            font-size: 13px;
-            font-weight: 600;
-            letter-spacing: 1px;
-            margin-bottom: 20px;
+            padding: 6px 16px; border-radius: 100px;
+            font-size: 13px; font-weight: 600;
+            letter-spacing: 1px; margin-bottom: 20px;
             position: relative;
         }
 
         .hero h1 {
-            font-size: 52px;
-            font-weight: 800;
-            color: white;
-            line-height: 1.1;
-            margin-bottom: 16px;
-            position: relative;
+            font-size: 52px; font-weight: 800;
+            color: white; line-height: 1.1;
+            margin-bottom: 16px; position: relative;
         }
 
         .hero h1 span {
             background: linear-gradient(135deg, #667eea, #a78bfa, #ec4899);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         }
 
         .hero p {
-            font-size: 18px;
-            color: #94a3b8;
-            max-width: 500px;
-            margin: 0 auto 32px;
+            font-size: 18px; color: #94a3b8;
+            max-width: 500px; margin: 0 auto 32px;
             position: relative;
         }
 
         .hero-stats {
-            display: flex;
-            justify-content: center;
-            gap: 40px;
-            position: relative;
+            display: flex; justify-content: center;
+            gap: 40px; position: relative;
         }
 
         .stat { text-align: center; }
@@ -98,20 +113,14 @@
 
         /* STEP INDICATOR */
         .steps {
-            display: flex;
-            justify-content: center;
-            gap: 8px;
-            margin-bottom: 32px;
+            display: flex; justify-content: center;
+            gap: 8px; margin-bottom: 32px;
         }
 
         .step {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 8px 16px;
-            border-radius: 100px;
-            font-size: 13px;
-            font-weight: 600;
+            display: flex; align-items: center; gap: 8px;
+            padding: 8px 16px; border-radius: 100px;
+            font-size: 13px; font-weight: 600;
             background: rgba(255,255,255,0.05);
             color: #64748b;
             border: 1px solid rgba(255,255,255,0.08);
@@ -124,38 +133,29 @@
         }
 
         .step-num {
-            width: 22px; height: 22px;
-            border-radius: 50%;
+            width: 22px; height: 22px; border-radius: 50%;
             background: rgba(255,255,255,0.1);
             display: flex; align-items: center; justify-content: center;
             font-size: 11px;
         }
 
-        .step.active .step-num {
-            background: #667eea;
-            color: white;
-        }
+        .step.active .step-num { background: #667eea; color: white; }
 
         /* CARDS */
         .card {
-            background: white;
-            border-radius: 20px;
-            padding: 32px;
-            margin-bottom: 20px;
+            background: white; border-radius: 20px;
+            padding: 32px; margin-bottom: 20px;
             box-shadow: 0 4px 6px rgba(0,0,0,0.05), 0 10px 40px rgba(0,0,0,0.1);
             border: 1px solid rgba(255,255,255,0.8);
         }
 
         .card-header {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 24px;
+            display: flex; align-items: center;
+            gap: 12px; margin-bottom: 24px;
         }
 
         .card-icon {
-            width: 40px; height: 40px;
-            border-radius: 10px;
+            width: 40px; height: 40px; border-radius: 10px;
             display: flex; align-items: center; justify-content: center;
             font-size: 20px;
         }
@@ -171,8 +171,7 @@
 
         /* TEMPLATE GRID */
         .template-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            display: grid; grid-template-columns: repeat(4, 1fr);
             gap: 12px;
         }
 
@@ -180,21 +179,15 @@
         .template-option input { display: none; }
 
         .template-card {
-            border: 2px solid #e2e8f0;
-            border-radius: 14px;
-            padding: 16px 12px;
-            text-align: center;
-            transition: all 0.25s;
-            background: #f8fafc;
-            position: relative;
-            overflow: hidden;
+            border: 2px solid #e2e8f0; border-radius: 14px;
+            padding: 16px 12px; text-align: center;
+            transition: all 0.25s; background: #f8fafc;
+            position: relative; overflow: hidden;
         }
 
         .template-card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0;
-            height: 4px;
+            content: ''; position: absolute;
+            top: 0; left: 0; right: 0; height: 4px;
         }
 
         .t-modern::before { background: linear-gradient(90deg, #2563eb, #60a5fa); }
@@ -203,99 +196,56 @@
         .t-creative::before { background: linear-gradient(90deg, #7c3aed, #ec4899); }
 
         .template-option input:checked + .template-card {
-            border-color: #667eea;
-            background: #eef2ff;
+            border-color: #667eea; background: #eef2ff;
             transform: translateY(-3px);
             box-shadow: 0 8px 25px rgba(102,126,234,0.25);
         }
 
         .template-preview {
-            height: 80px;
-            border-radius: 8px;
-            margin-bottom: 10px;
-            overflow: hidden;
-            position: relative;
+            height: 80px; border-radius: 8px;
+            margin-bottom: 10px; overflow: hidden;
         }
 
-        .t-modern .template-preview {
-            background: linear-gradient(90deg, #2563eb 35%, #f1f5f9 35%);
-        }
-        .t-classic .template-preview {
-            background: white;
-            border: 1px solid #e2e8f0;
-        }
-        .t-minimal .template-preview {
-            background: linear-gradient(180deg, white 60%, #f0fdf4 100%);
-            border-left: 4px solid #0d9488;
-        }
-        .t-creative .template-preview {
-            background: linear-gradient(135deg, #1e1e2e 50%, #7c3aed22 100%);
-        }
+        .t-modern .template-preview { background: linear-gradient(90deg, #2563eb 35%, #f1f5f9 35%); }
+        .t-classic .template-preview { background: white; border: 1px solid #e2e8f0; }
+        .t-minimal .template-preview { background: linear-gradient(180deg, white 60%, #f0fdf4 100%); border-left: 4px solid #0d9488; }
+        .t-creative .template-preview { background: linear-gradient(135deg, #1e1e2e 50%, #7c3aed22 100%); }
 
-        .template-name {
-            font-size: 14px;
-            font-weight: 700;
-            color: #0f172a;
-        }
-
-        .template-desc {
-            font-size: 11px;
-            color: #94a3b8;
-            margin-top: 3px;
-        }
+        .template-name { font-size: 14px; font-weight: 700; color: #0f172a; }
+        .template-desc { font-size: 11px; color: #94a3b8; margin-top: 3px; }
 
         .template-check {
-            position: absolute;
-            top: 8px; right: 8px;
-            width: 20px; height: 20px;
-            background: #667eea;
-            border-radius: 50%;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 11px;
+            position: absolute; top: 8px; right: 8px;
+            width: 20px; height: 20px; background: #667eea;
+            border-radius: 50%; display: none;
+            align-items: center; justify-content: center;
+            color: white; font-size: 11px;
         }
 
-        .template-option input:checked + .template-card .template-check {
-            display: flex;
-        }
+        .template-option input:checked + .template-card .template-check { display: flex; }
 
         /* FORM */
-        .form-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 16px;
-        }
-
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
         .form-grid.three { grid-template-columns: 1fr 1fr 1fr; }
         .form-group { display: flex; flex-direction: column; gap: 6px; }
         .form-group.full { grid-column: 1 / -1; }
 
         label {
-            font-size: 12px;
-            font-weight: 600;
-            color: #64748b;
-            text-transform: uppercase;
+            font-size: 12px; font-weight: 600;
+            color: #64748b; text-transform: uppercase;
             letter-spacing: 0.6px;
         }
 
         input, textarea, select {
             padding: 11px 14px;
-            border: 1.5px solid #e2e8f0;
-            border-radius: 10px;
-            font-size: 14px;
-            font-family: 'Inter', sans-serif;
-            color: #0f172a;
-            background: #f8fafc;
-            transition: all 0.2s;
+            border: 1.5px solid #e2e8f0; border-radius: 10px;
+            font-size: 14px; font-family: 'Inter', sans-serif;
+            color: #0f172a; background: #f8fafc; transition: all 0.2s;
         }
 
         input:focus, textarea:focus {
-            outline: none;
-            border-color: #667eea;
-            background: white;
-            box-shadow: 0 0 0 4px rgba(102,126,234,0.1);
+            outline: none; border-color: #667eea;
+            background: white; box-shadow: 0 0 0 4px rgba(102,126,234,0.1);
         }
 
         input::placeholder, textarea::placeholder { color: #cbd5e1; }
@@ -303,98 +253,54 @@
 
         /* PHOTO UPLOAD */
         .photo-upload-area {
-            border: 2px dashed #e2e8f0;
-            border-radius: 12px;
-            padding: 24px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.2s;
-            background: #f8fafc;
+            border: 2px dashed #e2e8f0; border-radius: 12px;
+            padding: 24px; text-align: center; cursor: pointer;
+            transition: all 0.2s; background: #f8fafc;
         }
 
-        .photo-upload-area:hover {
-            border-color: #667eea;
-            background: #f0f4ff;
-        }
-
+        .photo-upload-area:hover { border-color: #667eea; background: #f0f4ff; }
         .photo-upload-area .upload-icon { font-size: 36px; margin-bottom: 8px; }
         .photo-upload-area .upload-text { font-size: 14px; font-weight: 600; color: #475569; }
         .photo-upload-area .upload-hint { font-size: 12px; color: #94a3b8; margin-top: 4px; }
 
         /* GENERATE BUTTON */
-        .btn-wrap { position: relative; }
-
         .btn-generate {
-            width: 100%;
-            padding: 18px;
+            width: 100%; padding: 18px;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            border-radius: 14px;
-            font-size: 17px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-family: 'Inter', sans-serif;
-            letter-spacing: 0.3px;
-            position: relative;
-            overflow: hidden;
+            color: white; border: none; border-radius: 14px;
+            font-size: 17px; font-weight: 700; cursor: pointer;
+            transition: all 0.3s; font-family: 'Inter', sans-serif;
+            letter-spacing: 0.3px; position: relative; overflow: hidden;
         }
-
-        .btn-generate::after {
-            content: '';
-            position: absolute;
-            top: 50%; left: 50%;
-            width: 0; height: 0;
-            background: rgba(255,255,255,0.2);
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            transition: width 0.6s, height 0.6s;
-        }
-
-        .btn-generate:hover::after { width: 300px; height: 300px; }
 
         .btn-generate:hover {
             transform: translateY(-2px);
             box-shadow: 0 12px 35px rgba(102,126,234,0.5);
         }
 
-        .btn-generate:disabled {
-            opacity: 0.7;
-            cursor: not-allowed;
-            transform: none;
-        }
+        .btn-generate:disabled { opacity: 0.7; cursor: not-allowed; transform: none; }
 
         /* LOADING */
         .loading-overlay {
-            display: none;
-            background: white;
-            border-radius: 20px;
-            padding: 60px 40px;
-            text-align: center;
-            margin-bottom: 20px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            display: none; background: white; border-radius: 20px;
+            padding: 60px 40px; text-align: center;
+            margin-bottom: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.1);
         }
 
         .loading-ring {
             width: 64px; height: 64px;
-            margin: 0 auto 24px;
-            position: relative;
-        }
-
-        .loading-ring::before, .loading-ring::after {
-            content: '';
-            position: absolute;
-            border-radius: 50%;
+            margin: 0 auto 24px; position: relative;
         }
 
         .loading-ring::before {
+            content: ''; position: absolute;
             width: 100%; height: 100%;
-            border: 4px solid #e2e8f0;
+            border-radius: 50%; border: 4px solid #e2e8f0;
         }
 
         .loading-ring::after {
-            width: 100%; height: 100%;
+            content: ''; position: absolute;
+            width: 100%; height: 100%; border-radius: 50%;
             border: 4px solid transparent;
             border-top-color: #667eea;
             animation: spin 1s linear infinite;
@@ -402,25 +308,13 @@
 
         @keyframes spin { to { transform: rotate(360deg); } }
 
-        .loading-title {
-            font-size: 20px;
-            font-weight: 700;
-            color: #0f172a;
-            margin-bottom: 8px;
-        }
-
-        .loading-sub {
-            font-size: 14px;
-            color: #94a3b8;
-        }
+        .loading-title { font-size: 20px; font-weight: 700; color: #0f172a; margin-bottom: 8px; }
+        .loading-sub { font-size: 14px; color: #94a3b8; }
 
         .loading-dots span {
-            display: inline-block;
-            width: 8px; height: 8px;
-            border-radius: 50%;
-            background: #667eea;
-            margin: 0 3px;
-            animation: bounce 1.4s infinite;
+            display: inline-block; width: 8px; height: 8px;
+            border-radius: 50%; background: #667eea;
+            margin: 0 3px; animation: bounce 1.4s infinite;
         }
 
         .loading-dots span:nth-child(2) { animation-delay: 0.2s; }
@@ -433,80 +327,76 @@
 
         /* RESULT */
         .result-wrapper {
-            background: white;
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
-            margin-bottom: 20px;
+            background: white; border-radius: 20px; overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2); margin-bottom: 20px;
         }
 
         .result-toolbar {
             background: linear-gradient(135deg, #0f172a, #1e293b);
-            padding: 16px 24px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
+            padding: 16px 24px; display: flex;
+            align-items: center; justify-content: space-between;
         }
 
-        .result-toolbar-left {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .toolbar-dot {
-            width: 12px; height: 12px;
-            border-radius: 50%;
-        }
-
-        .result-title {
-            color: white;
-            font-size: 15px;
-            font-weight: 600;
-            margin-left: 8px;
-        }
-
-        .toolbar-actions {
-            display: flex;
-            gap: 10px;
-        }
+        .result-toolbar-left { display: flex; align-items: center; gap: 12px; }
+        .toolbar-dot { width: 12px; height: 12px; border-radius: 50%; }
+        .result-title { color: white; font-size: 15px; font-weight: 600; margin-left: 8px; }
+        .toolbar-actions { display: flex; gap: 10px; }
 
         .btn-action {
-            padding: 8px 20px;
-            border-radius: 8px;
-            font-size: 13px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s;
-            border: none;
+            padding: 8px 20px; border-radius: 8px;
+            font-size: 13px; font-weight: 600; cursor: pointer;
+            transition: all 0.2s; border: none;
             font-family: 'Inter', sans-serif;
         }
 
-        .btn-pdf {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-        }
-
+        .btn-pdf { background: linear-gradient(135deg, #667eea, #764ba2); color: white; }
         .btn-pdf:hover { opacity: 0.9; transform: translateY(-1px); }
-
-        .btn-new {
-            background: rgba(255,255,255,0.1);
-            color: white;
-            border: 1px solid rgba(255,255,255,0.2);
-        }
-
+        .btn-new { background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.2); }
         .btn-new:hover { background: rgba(255,255,255,0.2); }
 
-        .result-body {
-            padding: 40px;
-            background: #f8fafc;
-        }
+        .result-body { padding: 40px; background: #f8fafc; }
 
         .resume-container {
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 20px rgba(0,0,0,0.08);
-            overflow: hidden;
+            background: white; border-radius: 8px;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.08); overflow: hidden;
+        }
+
+        /* MESSAGES */
+        .error-box {
+            background: #fee2e2; color: #dc2626;
+            padding: 16px 20px; border-radius: 12px;
+            margin-bottom: 20px; text-align: center;
+            font-weight: 600; border: 1px solid #fecaca;
+            font-size: 15px;
+        }
+
+        .info-box {
+            background: #f0fdf4; color: #16a34a;
+            padding: 14px 20px; border-radius: 12px;
+            margin-bottom: 20px; text-align: center;
+            font-weight: 600; border: 1px solid #bbf7d0;
+            font-size: 14px;
+        }
+
+        /* POPUP */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(50px) scale(0.95); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        /* REMAINING BADGE */
+        .remaining-badge {
+            display: inline-flex; align-items: center; gap: 6px;
+            background: rgba(102,126,234,0.15);
+            border: 1px solid rgba(102,126,234,0.3);
+            color: #a5b4fc; padding: 6px 14px;
+            border-radius: 100px; font-size: 13px;
+            font-weight: 600; margin-bottom: 16px;
         }
 
         @media (max-width: 640px) {
@@ -515,19 +405,38 @@
             .template-grid { grid-template-columns: repeat(2, 1fr); }
             .hero-stats { gap: 20px; }
             .steps { flex-wrap: wrap; }
+            nav { padding: 14px 20px; }
+            .nav-links { gap: 12px; }
         }
 
         @media print {
-            body { background: white; }
-            .hero, .main > .card, .main > .steps,
-            .result-toolbar, .btn-generate { display: none !important; }
+            @page { margin: 0; size: A4; }
+            body { background: white; margin: 0; padding: 0; }
+            nav, .hero, .main > .card, .main > .steps,
+            .result-toolbar, .btn-generate,
+            .loading-overlay { display: none !important; }
             .result-wrapper { box-shadow: none; border-radius: 0; }
             .result-body { padding: 0; background: white; }
             .resume-container { box-shadow: none; }
+            .main { margin: 0; padding: 0; max-width: 100%; }
         }
     </style>
 </head>
 <body>
+
+<!-- NAVBAR -->
+<nav>
+    <a href="/" class="nav-logo">⚡ AI Resume</a>
+    <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/builder">Builder</a>
+        <a href="/blog">Blog</a>
+        <a href="/tips">Fresher Tips</a>
+        <a href="/about">About</a>
+        <a href="/contact">Contact</a>
+        <a href="/builder" class="nav-cta">Build Free →</a>
+    </div>
+</nav>
 
 <!-- HERO -->
 <div class="hero">
@@ -552,17 +461,21 @@
 
 <div class="main">
 
+    <!-- ERROR MESSAGE -->
+    <div class="error-box" th:if="${error}">
+        ⚠️ <span th:text="${error}"></span>
+    </div>
+
+    <!-- INFO MESSAGE -->
+    <div class="info-box" th:if="${info}">
+        <span th:text="${info}"></span>
+    </div>
+
     <!-- STEPS -->
     <div class="steps">
-        <div class="step active">
-            <div class="step-num">1</div> Choose Template
-        </div>
-        <div class="step active">
-            <div class="step-num">2</div> Fill Details
-        </div>
-        <div class="step active">
-            <div class="step-num">3</div> Generate & Download
-        </div>
+        <div class="step active"><div class="step-num">1</div> Choose Template</div>
+        <div class="step active"><div class="step-num">2</div> Fill Details</div>
+        <div class="step active"><div class="step-num">3</div> Generate & Download</div>
     </div>
 
     <form action="/generate" method="post" enctype="multipart/form-data" onsubmit="showLoading()">
@@ -652,7 +565,7 @@
                 </div>
                 <div class="form-group full">
                     <label>Professional Summary</label>
-                    <textarea name="summary" placeholder="Passionate software developer with 2+ years of experience building scalable web applications. Skilled in Java, Spring Boot and modern technologies..."></textarea>
+                    <textarea name="summary" placeholder="Passionate software developer with 2+ years of experience..."></textarea>
                 </div>
                 <div class="form-group full">
                     <label>Profile Photo (Optional)</label>
@@ -679,7 +592,7 @@
             <div class="form-grid">
                 <div class="form-group">
                     <label>Technical Skills</label>
-                    <textarea name="skills" placeholder="Java, Spring Boot, MySQL, React, Git, Docker, AWS, REST APIs..."></textarea>
+                    <textarea name="skills" placeholder="Java, Spring Boot, MySQL, React, Git..."></textarea>
                 </div>
                 <div class="form-group">
                     <label>Languages Known</label>
@@ -700,7 +613,7 @@
             <div class="form-group">
                 <label>Experience Details</label>
                 <textarea name="experience" style="height:130px"
-                          placeholder="Software Developer at XYZ Tech (Jan 2022 - Present)&#10;• Built REST APIs using Spring Boot serving 10k+ users&#10;• Reduced page load time by 40% through optimization&#10;• Led team of 3 developers for new product feature&#10;&#10;Intern at ABC Company (Jun 2021 - Dec 2021)&#10;• Developed frontend features using React&#10;• Fixed 50+ bugs improving app stability"></textarea>
+                          placeholder="Software Developer at XYZ Tech (Jan 2022 - Present)&#10;• Built REST APIs using Spring Boot&#10;• Reduced load time by 40%"></textarea>
             </div>
         </div>
 
@@ -716,7 +629,7 @@
             <div class="form-group">
                 <label>Projects</label>
                 <textarea name="projects" style="height:130px"
-                          placeholder="AI Resume Builder | github.com/kiran/resume-builder&#10;• Built with Java Spring Boot + Groq AI&#10;• Generates professional resumes in 10 seconds&#10;&#10;E-Commerce Platform | Live: myshop.com&#10;• Full stack app with React + Spring Boot + MySQL&#10;• 500+ active users"></textarea>
+                          placeholder="AI Resume Builder | github.com/kiran/resume-builder&#10;• Built with Java Spring Boot + AI&#10;• 500+ users"></textarea>
             </div>
         </div>
 
@@ -733,12 +646,12 @@
                 <div class="form-group">
                     <label>Education</label>
                     <textarea name="education"
-                              placeholder="B.Tech Computer Science&#10;ABC University, Bangalore&#10;2018 - 2022 | CGPA: 8.5/10"></textarea>
+                              placeholder="B.Tech Computer Science&#10;ABC University 2022&#10;CGPA: 8.5/10"></textarea>
                 </div>
                 <div class="form-group">
                     <label>Certifications & Awards</label>
                     <textarea name="certifications"
-                              placeholder="AWS Certified Developer - 2023&#10;Oracle Java SE Certification&#10;Best Employee Award - XYZ 2023&#10;Hackathon Winner - TechFest 2022"></textarea>
+                              placeholder="AWS Certified Developer - 2023&#10;Best Employee Award - 2023"></textarea>
                 </div>
             </div>
         </div>
@@ -768,7 +681,8 @@
                 <div class="result-title">✅ Your Resume is Ready!</div>
             </div>
             <div class="toolbar-actions">
-                <button class="btn-action btn-new" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+                <button class="btn-action btn-new"
+                        onclick="window.scrollTo({top:0,behavior:'smooth'})">
                     ↑ Edit Resume
                 </button>
                 <button class="btn-action btn-pdf" onclick="downloadResume()">
@@ -786,6 +700,164 @@
 </div>
 
 <script>
+    // ── WELCOME POPUP ──────────────────────────────────────────
+    function showWelcomePopup() {
+        if (sessionStorage.getItem('popupShown')) return;
+        sessionStorage.setItem('popupShown', 'true');
+
+        const overlay = document.createElement('div');
+        overlay.id = 'welcomePopup';
+        overlay.style.cssText = `
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.75);
+            backdrop-filter: blur(8px);
+            z-index: 9999;
+            display: flex; align-items: center; justify-content: center;
+            animation: fadeIn 0.3s ease;
+            padding: 20px;
+        `;
+
+        overlay.innerHTML = `
+            <div style="
+                background: white; border-radius: 24px;
+                padding: 40px 36px; max-width: 440px; width: 100%;
+                text-align: center;
+                box-shadow: 0 30px 80px rgba(0,0,0,0.4);
+                animation: slideUp 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            ">
+                <div style="
+                    width: 72px; height: 72px; margin: 0 auto 20px;
+                    background: linear-gradient(135deg, #667eea, #764ba2);
+                    border-radius: 20px;
+                    display: flex; align-items: center; justify-content: center;
+                    font-size: 36px;
+                ">⚡</div>
+
+                <h2 style="
+                    font-size: 22px; font-weight: 800;
+                    color: #0f172a; margin-bottom: 10px;
+                    font-family: 'Inter', sans-serif;
+                ">Welcome to AI Resume Builder!</h2>
+
+                <p style="
+                    font-size: 14px; color: #64748b;
+                    line-height: 1.7; margin-bottom: 24px;
+                    font-family: 'Inter', sans-serif;
+                ">
+                    Create a stunning professional resume in seconds.<br/>
+                    <strong style='color:#0f172a;'>Completely free</strong> — no signup needed!
+                </p>
+
+                <div style="
+                    background: linear-gradient(135deg, #f0f4ff, #faf5ff);
+                    border: 1px solid #c7d2fe; border-radius: 16px;
+                    padding: 20px; margin-bottom: 24px;
+                ">
+                    <p style="
+                        font-size: 13px; font-weight: 700;
+                        color: #4338ca; margin-bottom: 16px;
+                        text-transform: uppercase; letter-spacing: 0.5px;
+                        font-family: 'Inter', sans-serif;
+                    ">⚠️ Fair Usage Policy</p>
+
+                    <div style="display: flex; justify-content: space-around; gap: 12px;">
+                        <div style="text-align: center; flex: 1;">
+                            <div style="
+                                font-size: 32px; font-weight: 900;
+                                background: linear-gradient(135deg, #667eea, #764ba2);
+                                -webkit-background-clip: text;
+                                -webkit-text-fill-color: transparent;
+                                font-family: 'Inter', sans-serif;
+                            ">3</div>
+                            <div style="
+                                font-size: 11px; color: #64748b;
+                                margin-top: 4px; font-weight: 600;
+                                font-family: 'Inter', sans-serif;
+                            ">Free Resumes</div>
+                            <div style="font-size: 10px; color: #94a3b8; font-family: 'Inter', sans-serif;">per hour</div>
+                        </div>
+                        <div style="
+                            width: 1px; background: #e2e8f0;
+                            margin: 0 8px;
+                        "></div>
+                        <div style="text-align: center; flex: 1;">
+                            <div style="
+                                font-size: 32px; font-weight: 900;
+                                background: linear-gradient(135deg, #667eea, #764ba2);
+                                -webkit-background-clip: text;
+                                -webkit-text-fill-color: transparent;
+                                font-family: 'Inter', sans-serif;
+                            ">1hr</div>
+                            <div style="
+                                font-size: 11px; color: #64748b;
+                                margin-top: 4px; font-weight: 600;
+                                font-family: 'Inter', sans-serif;
+                            ">Auto Reset</div>
+                            <div style="font-size: 10px; color: #94a3b8; font-family: 'Inter', sans-serif;">wait time</div>
+                        </div>
+                        <div style="
+                            width: 1px; background: #e2e8f0;
+                            margin: 0 8px;
+                        "></div>
+                        <div style="text-align: center; flex: 1;">
+                            <div style="
+                                font-size: 32px; font-weight: 900;
+                                background: linear-gradient(135deg, #10b981, #059669);
+                                -webkit-background-clip: text;
+                                -webkit-text-fill-color: transparent;
+                                font-family: 'Inter', sans-serif;
+                            ">₹0</div>
+                            <div style="
+                                font-size: 11px; color: #64748b;
+                                margin-top: 4px; font-weight: 600;
+                                font-family: 'Inter', sans-serif;
+                            ">Always Free</div>
+                            <div style="font-size: 10px; color: #94a3b8; font-family: 'Inter', sans-serif;">no payment</div>
+                        </div>
+                    </div>
+                </div>
+
+                <button onclick="closePopup()" style="
+                    width: 100%; padding: 15px;
+                    background: linear-gradient(135deg, #667eea, #764ba2);
+                    color: white; border: none; border-radius: 12px;
+                    font-size: 16px; font-weight: 700; cursor: pointer;
+                    font-family: 'Inter', sans-serif;
+                    transition: all 0.2s;
+                    box-shadow: 0 8px 25px rgba(102,126,234,0.4);
+                "
+                onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 12px 30px rgba(102,126,234,0.5)'"
+                onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 8px 25px rgba(102,126,234,0.4)'">
+                    Got it! Let's Build My Resume 🚀
+                </button>
+
+                <p style="
+                    font-size: 11px; color: #94a3b8;
+                    margin-top: 14px; font-family: 'Inter', sans-serif;
+                ">
+                    🔒 No signup &nbsp;•&nbsp; No payment &nbsp;•&nbsp; No data stored
+                </p>
+            </div>
+        `;
+
+        // Close on overlay click
+        overlay.addEventListener('click', function(e) {
+            if (e.target === overlay) closePopup();
+        });
+
+        document.body.appendChild(overlay);
+    }
+
+    function closePopup() {
+        const popup = document.getElementById('welcomePopup');
+        if (popup) {
+            popup.style.opacity = '0';
+            popup.style.transition = 'opacity 0.3s ease';
+            setTimeout(() => popup.remove(), 300);
+        }
+    }
+
+    // ── LOADING ──────────────────────────────────────────────
     function showLoading() {
         document.getElementById('loading').style.display = 'block';
         var btn = document.querySelector('.btn-generate');
@@ -794,30 +866,57 @@
         setTimeout(() => {
             document.getElementById('loading').scrollIntoView({ behavior: 'smooth' });
         }, 100);
+
+        // Auto reset if takes too long
+        setTimeout(() => {
+            var loading = document.getElementById('loading');
+            if (loading && loading.style.display === 'block') {
+                loading.style.display = 'none';
+                btn.disabled = false;
+                btn.innerHTML = '✨ Generate My Professional Resume →';
+            }
+        }, 30000);
     }
 
+    // ── PHOTO ──────────────────────────────────────────────
     function updatePhoto(input) {
         if (input.files && input.files[0]) {
-            document.getElementById('photoText').innerHTML = '✅ ' + input.files[0].name + ' selected';
+            document.getElementById('photoText').innerHTML =
+                '✅ ' + input.files[0].name + ' selected';
         }
     }
 
+    // ── DOWNLOAD ──────────────────────────────────────────────
     function downloadResume() {
         var content = document.getElementById('resumeOutput').innerHTML;
         var win = window.open('', '_blank');
         win.document.write(`<!DOCTYPE html>
-            <html><head><title>Resume</title>
-            <style>
-                body { margin: 0; padding: 0; font-family: Arial, sans-serif; }
-                button { display: none !important; }
-                @media print { button { display: none !important; } }
-            </style>
-            </head><body>${content}</body></html>`);
+            <html>
+            <head>
+                <title>Resume</title>
+                <style>
+                    * { margin: 0; padding: 0; box-sizing: border-box; }
+                    body { margin: 0; padding: 0; font-family: Arial, sans-serif; }
+                    button { display: none !important; }
+                    @media print {
+                        @page { margin: 0; size: A4; }
+                        body { margin: 0; padding: 0; }
+                        button { display: none !important; }
+                    }
+                </style>
+            </head>
+            <body>${content}</body>
+            </html>`);
         win.document.close();
         setTimeout(() => { win.focus(); win.print(); }, 800);
     }
 
+    // ── ON LOAD ──────────────────────────────────────────────
     window.onload = function() {
+        // Show welcome popup on first visit
+        showWelcomePopup();
+
+        // Scroll to result if exists
         var result = document.querySelector('.result-wrapper');
         if (result) {
             setTimeout(() => result.scrollIntoView({ behavior: 'smooth' }), 400);
